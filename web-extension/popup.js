@@ -3,13 +3,21 @@ document.querySelector('#convertButton').addEventListener('click', function() {
     chrome.tabs.sendMessage(tabs[0].id, {type: 'getschedule'});
   });
 });
-  
+
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === "receiveschedule") {
     const output = separateSchedules(request.schedule);
-    downloadCSV(output);
+    const iCalData = jsonToICal(output);
+    downloadICS(iCalData, "schedule");
+
+    const alertBox = document.querySelector("#alert-box");
+    const newTag = document.createElement("p");
+    newTag.textContent = "ICalendar file (.ics) downloaded";
+    alertBox.appendChild(newTag);
   }
 });
+
 
 function getDayDate(dayOfWeek) {
   const today = new Date();
@@ -27,37 +35,6 @@ function getDayDate(dayOfWeek) {
   
   return targetDate.toLocaleDateString();
 }
-
-
-function convertToCSV(data) {
-  const csvRows = [];
-
-  // Adding the header row
-  const headers = Object.keys(data[0]);
-  csvRows.push(headers.join(','));
-
-  // Adding data rows
-  for (const row of data) {
-      const values = headers.map(header => {
-      const value = row[header];
-      return value.includes(',') ? `"${value}"` : value;
-      });
-      csvRows.push(values.join(','));
-  }
-
-  // Joining rows with newline characters
-  return csvRows.join('\n');
-  }
-
-
-function downloadCSV(csvContent) {
-  const blob = new Blob([csvContent], { type: 'text/csv' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'schedule.csv';
-  link.click();
-}
-
 
 function separateSchedules(data) {
   let csvObject = [];
@@ -94,8 +71,86 @@ function separateSchedules(data) {
           }
       }
   }
-  return convertToCSV(csvObject);
+  return csvObject;
 }
+
+
+// Function to convert JSON data to iCalendar format with recurring rule
+function jsonToICal(events) {
+  let icalContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ChatGPT//Event Calendar//EN\n`;
+
+  const currentDate = new Date();
+  const fourMonthsLater = new Date(currentDate);
+  fourMonthsLater.setMonth(currentDate.getMonth() + 4);
+
+  for (const event of events) {
+    const uid = event.subject.replace(/\s+/g, '') + event['Start Date'] + event['Start Time'];
+    const startDate = parseDateTime(event['Start Date'], event['Start Time']);
+    const endDate = parseDateTime(event['Start Date'], event['End Time']);
+
+    if (!startDate || !endDate) {
+      console.error('Invalid date or time format.');
+      continue;
+    }
+
+    icalContent += `BEGIN:VEVENT
+UID:${uid}
+SUMMARY:${event.subject}
+DTSTART:${formatICalDate(startDate)}
+DTEND:${formatICalDate(endDate)}
+RRULE:FREQ=WEEKLY;UNTIL=${formatICalDate(fourMonthsLater)}
+END:VEVENT\n`;
+  }
+
+  icalContent += 'END:VCALENDAR';
+  return icalContent;
+}
+
+
+// Function to parse date and time strings
+function parseDateTime(dateStr, timeStr) {
+  const [month, day, year] = dateStr.split('/').map(Number);
+  const [time, meridian] = timeStr.split(/(?=[APap][Mm])/); // Split at AM or PM marker
+  let [hours, minutes] = time.split(':').map(Number);
+
+  // Adjust hours for AM/PM
+  if (meridian && meridian.toLowerCase() === 'pm' && hours !== 12) {
+    hours += 12;
+  } else if (meridian && meridian.toLowerCase() === 'am' && hours === 12) {
+    hours = 0;
+  }
+
+  const parsedDate = new Date(year, month - 1, day, hours, minutes);
+
+  if (isNaN(parsedDate)) {
+    console.error(`Failed to parse date: ${dateStr} ${timeStr}`);
+    return null;
+  }
+
+  return parsedDate;
+}
+
+  // Function to format date as iCalendar date-time format (yyyyMMddTHHmmssZ)
+  function formatICalDate(date) {
+    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  }
+  
+  // Function to download .ics file
+  function downloadICS(content, filename) {
+    const blob = new Blob([content], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename + '.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
 function formatTime(timeString) {
   const [time, period] = timeString.match(/(\d+:\d+)([APMapm]+)/).slice(1);

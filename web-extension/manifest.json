@@ -1,11 +1,15 @@
 {
-    "name": "PUPSIS Schedule to .ics file",
+    "name": "PUPSIS Schedule Exporter",
     "version": "1.0",
-    "description": "converts schedule from PUPSIS to .ics file",
+    "description": "A web extension that converts the schedule of students from PUPSIS to Icalendar (.ics) format so that they can easily import their schedules on other popular calendar tools like Google Calendar.",
     "permissions": ["activeTab"],
     "content_scripts": [
       {
-        "matches": ["file:///D:/Downloads/School%20Year%202324%20-%20First%20Semester%20-%20PUPSIS.html"],
+        "matches": [
+          "file:///D:/Downloads/School%20Year%202324%20-%20First%20Semester%20-%20PUPSIS.html",
+          "https://sis1.pup.edu.ph/student/schedule",
+          "https://sis2.pup.edu.ph/student/schedule"
+        ],
         "js": ["contentScript.js"]
       }
     ],
