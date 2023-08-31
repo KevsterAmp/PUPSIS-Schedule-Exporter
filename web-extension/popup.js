@@ -1,6 +1,15 @@
 document.querySelector('#convertButton').addEventListener('click', function() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    chrome.tabs.sendMessage(tabs[0].id, {type: 'getschedule'});
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    const currentTab = tabs[0];
+    
+    if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
+      chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
+    } else {
+      // navigates to sis portal
+      chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
+        chrome.tabs.update(newTab.id, { active: true });
+      });
+    }
   });
 });
 
