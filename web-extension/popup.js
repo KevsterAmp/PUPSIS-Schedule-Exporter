@@ -11,9 +11,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     const iCalData = jsonToICal(output);
     downloadICS(iCalData, "schedule");
 
-    const alertBox = document.querySelector("#alert-box");
+    const alertBox = document.querySelector("#display-box");
     const newTag = document.createElement("p");
-    newTag.textContent = "ICalendar file (.ics) downloaded";
+
+    newTag.className = "display-text";
+    newTag.textContent = "ICalendar file (.ics) downloaded!";
     alertBox.appendChild(newTag);
   }
 });
@@ -35,6 +37,7 @@ function getDayDate(dayOfWeek) {
   
   return targetDate.toLocaleDateString();
 }
+
 
 function separateSchedules(data) {
   let csvObject = [];
@@ -77,13 +80,23 @@ function separateSchedules(data) {
 
 // Function to convert JSON data to iCalendar format with recurring rule
 function jsonToICal(events) {
-  let icalContent = `BEGIN:VCALENDAR
+  let icalContent = 
+`BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//ChatGPT//Event Calendar//EN\n`;
 
   const currentDate = new Date();
-  const fourMonthsLater = new Date(currentDate);
-  fourMonthsLater.setMonth(currentDate.getMonth() + 4);
+  let endRecurringDate = "";
+  let dateInput = document.getElementById("dateInput").value;
+
+  if (dateInput === "") {
+    endRecurringDate = new Date();
+    endRecurringDate.setMonth(currentDate.getMonth() + 4);
+  }
+
+  else {
+    endRecurringDate = new Date(dateInput);
+  }
 
   for (const event of events) {
     const uid = event.subject.replace(/\s+/g, '') + event['Start Date'] + event['Start Time'];
@@ -95,12 +108,13 @@ PRODID:-//ChatGPT//Event Calendar//EN\n`;
       continue;
     }
 
-    icalContent += `BEGIN:VEVENT
+    icalContent +=
+`BEGIN:VEVENT
 UID:${uid}
 SUMMARY:${event.subject}
 DTSTART:${formatICalDate(startDate)}
 DTEND:${formatICalDate(endDate)}
-RRULE:FREQ=WEEKLY;UNTIL=${formatICalDate(fourMonthsLater)}
+RRULE:FREQ=WEEKLY;UNTIL=${formatICalDate(endRecurringDate)}
 END:VEVENT\n`;
   }
 
@@ -132,25 +146,27 @@ function parseDateTime(dateStr, timeStr) {
   return parsedDate;
 }
 
-  // Function to format date as iCalendar date-time format (yyyyMMddTHHmmssZ)
-  function formatICalDate(date) {
-    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-  }
+
+// Function to format date as iCalendar date-time format (yyyyMMddTHHmmssZ)
+function formatICalDate(date) {
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}
   
-  // Function to download .ics file
-  function downloadICS(content, filename) {
-    const blob = new Blob([content], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = filename + '.ics';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
+
+// Function to download .ics file
+function downloadICS(content, filename) {
+  const blob = new Blob([content], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = filename + '.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 function formatTime(timeString) {
   const [time, period] = timeString.match(/(\d+:\d+)([APMapm]+)/).slice(1);
