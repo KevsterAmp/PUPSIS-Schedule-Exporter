@@ -1,0 +1,17 @@
+{
+    "name": "PUPSIS Schedule to .ics file",
+    "version": "1.0",
+    "description": "converts schedule from PUPSIS to .ics file",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["file:///D:/Downloads/School%20Year%202324%20-%20First%20Semester%20-%20PUPSIS.html"],
+        "js": ["contentScript.js"]
+      }
+    ],
+    "action": {
+      "default_title": "test",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
