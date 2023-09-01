@@ -3,6 +3,11 @@ A web extension that converts the schedule of students from PUPSIS to Icalendar 
 <br> <br>
 
 This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
+<br>
+
+[Installation Guide](#installation-guide) <br>
+[Usage](#usage) <br>
+[Features](#features)
 
 # Installation guide:
 #### 1. Click the **"Code"** button on this repository and then **"Download ZIP"**
@@ -36,8 +41,7 @@ This project aims to help PUP Students to easily sync their Schedules to their d
 #### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
 <img src="img/usage.png">
 
-#### You can now go to https://sis2.pup.edu.ph/student/schedule. Click the extension and the **"Convert to .ics"** button to download 
-the ICalendar file (.ics)
+#### You can now go to https://sis2.pup.edu.ph/student/schedule. Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
 
 # Features
 
