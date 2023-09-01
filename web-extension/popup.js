@@ -7,7 +7,7 @@ document.querySelector('#convertButton').addEventListener('click', function() {
     } else {
       // navigates to sis portal
       chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
-        chrome.tabs.update(newTab.id, { active: true });
+      chrome.tabs.update(newTab.id, { active: true });
       });
     }
   });
@@ -16,12 +16,19 @@ document.querySelector('#convertButton').addEventListener('click', function() {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   const alertBox = document.querySelector("#display-box");
-  const newTag = document.createElement("p");
-  newTag.className = "display-text";
+  let newTag = document.querySelector(".display-text");
+
+  if(!newTag){
+    const displayText = document.createElement("p");
+    displayText.className = "display-text";
+    alertBox.appendChild(displayText);
+    newTag = displayText;
+  }
 
   if (request.type === "receiveschedule") {
     if (request.schedule.length < 1) {
       newTag.textContent = "Empty schedule found";
+      newTag.classList.add("display-text-error");
     }
 
     else {
@@ -31,7 +38,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
       newTag.textContent = "ICalendar file (.ics) downloaded!";
     }
-
     alertBox.appendChild(newTag);
   }
 });
