@@ -1,7 +1,7 @@
 {
     "name": "PUPSIS Schedule Exporter",
     "version": "1.0",
-    "description": "A web extension that converts the schedule of students from PUPSIS to Icalendar (.ics) format so that they can easily import their schedules on other popular calendar tools like Google Calendar.",
+    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics)",
     "permissions": ["activeTab"],
     "content_scripts": [
       {
@@ -14,7 +14,7 @@
       }
     ],
     "action": {
-      "default_title": "test",
+      "default_title": "PUPSIS Schedule Exporter",
       "default_popup": "popup.html"
     },
     "manifest_version": 3

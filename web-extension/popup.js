@@ -99,7 +99,7 @@ function jsonToICal(events) {
   let icalContent = 
 `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//ChatGPT//Event Calendar//EN\n`;
+PRODID:-//PUPSIS TO ICS//Event Calendar//EN\n`;
 
   const currentDate = new Date();
   let endRecurringDate = "";
