@@ -1,5 +1,3 @@
-console.log("listening");
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('Received message:', request);
     if (request.type === 'getschedule') {
@@ -9,9 +7,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         chrome.runtime.sendMessage({ 
             type: "receiveschedule",
-            schedule: schedule });
-
-        console.log("response sent");
+            schedule: schedule });        
     }
 });
 

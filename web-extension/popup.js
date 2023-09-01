@@ -15,16 +15,23 @@ document.querySelector('#convertButton').addEventListener('click', function() {
 
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  const alertBox = document.querySelector("#display-box");
+  const newTag = document.createElement("p");
+  newTag.className = "display-text";
+
   if (request.type === "receiveschedule") {
-    const output = separateSchedules(request.schedule);
-    const iCalData = jsonToICal(output);
-    downloadICS(iCalData, "schedule");
+    if (request.schedule.length < 1) {
+      newTag.textContent = "Empty schedule found";
+    }
 
-    const alertBox = document.querySelector("#display-box");
-    const newTag = document.createElement("p");
+    else {
+      const output = separateSchedules(request.schedule);
+      const iCalData = jsonToICal(output);
+      downloadICS(iCalData, "schedule");
 
-    newTag.className = "display-text";
-    newTag.textContent = "ICalendar file (.ics) downloaded!";
+      newTag.textContent = "ICalendar file (.ics) downloaded!";
+    }
+
     alertBox.appendChild(newTag);
   }
 });
