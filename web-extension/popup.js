@@ -4,7 +4,9 @@ document.querySelector('#convertButton').addEventListener('click', function() {
     
     if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
       chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
-    } else {
+    } 
+    
+    else {
       // navigates to sis portal
       chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
       chrome.tabs.update(newTab.id, { active: true });

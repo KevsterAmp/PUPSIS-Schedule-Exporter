@@ -41,7 +41,7 @@ This project aims to help PUP Students to easily sync their Schedules to their d
 #### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
 <img src="img/usage.png">
 
-#### You can now go to https://sis2.pup.edu.ph/student/schedule. Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
+#### You can now go to https://sis2.pup.edu.ph/student/schedule. <br>Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
 
 # Features
 
@@ -59,4 +59,4 @@ With this feature, Users have the option to choose when the recurring events sho
 - [x] Implement "End Date of Recurring Schedule" feature
 - [x] Return error at empty schedule
 - [ ] Implement CSV feature
-- [x] Add Styling (Thanks egg-lou!)
+- [x] Add UI/Styling (Thanks @egg-lou & @yam-1111!)
