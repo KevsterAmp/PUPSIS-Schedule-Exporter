@@ -1,0 +1,43 @@
+  .active-main-item{ border-bottom: 2px solid #800000; }
+    .accent-theme .btn-link, .accent-theme a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link):not(.page-link):not(.btn){
+        color: #800000;
+    };
+    .text-theme, a { color: #800000 !important; }
+    .card-theme.card-outline{
+      border-top: 3px solid #800000;
+    }
+    .card-theme:not(.card-outline) > .card-header {
+      background-color: #800000;
+      color: white;
+    }
+    .btn-theme {
+      background-color: #800000;
+      color: white;
+    }
+    .btn-theme:hover {
+      background-color: #b80303;
+      color: white;
+    }
+    .btn-theme:focus{
+      background-color: #500202;;
+      color: white;
+    }
+    .btn-lg{
+      padding: 25px 70px;
+    }
+    
+    .form-control {
+      height: calc(1.8125rem + 2px);
+      padding: .25rem .5rem;
+      font-size: .875rem;
+      line-height: 1.5;
+      border-radius: .2rem;
+    }
+    .callout a{
+      color:white;
+      text-decoration: none;
+    }
+    .input-sm{
+      font-size: .75rem;
+      height: calc(1.5rem + 1px);
+    }

@@ -1,62 +1,43 @@
 # PUPSIS-Schedule-Exporter
-A web extension that converts the schedule of students from PUPSIS to Icalendar (.ics) format so that they can easily import their schedules on other popular calendar tools like Google Calendar.
-<br> <br>
 
-This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
-<br>
+This branch is the testing branch for developers wanting to contribute to this project. 
 
-[Installation Guide](#installation-guide) <br>
-[Usage](#usage) <br>
-[Features](#features)
+# How to test extension
+1. Download Extension from the **Main branch**
+2. Open [Test PUPSIS Schedule Page](src/School%20Year%202324%20-%20First%20Semester%20-%20PUPSIS.html) on your browser
+3. on **manifest.json**, Add the file directory of the [Test PUPSIS Schedule Page](src/School%20Year%202324%20-%20First%20Semester%20-%20PUPSIS.html) on the **manifest.json matches list** as shown below:
 
-# Installation guide:
-#### 1. Click the **"Code"** button on this repository and then **"Download ZIP"**
-<img src="./img/step_1.png">
+        "matches": [
+            "add the School Year 2324 - First Semester - PUPSIS.html directory here",
+            "https://sis1.pup.edu.ph/student/schedule",
+            "https://sis2.pup.edu.ph/student/schedule"
+        ],
 
-#### 2. Extract the .zip file using WINRAR (or any apps for unzipping)
-<img src="./img/step_2.png">
+# Changes when pushing to main
+### popup.js 
 
-#### 3. Click the **three dots** on the upper right side of your browser <br> &nbsp;&nbsp;&nbsp; Click on **"Extensions"** <br> &nbsp;&nbsp;&nbsp; Click on **"Manage Extensions"**
-<img src="img/step_3.png">
+remove the comments on the if else function when pushing to main
 
-#### 4. Click **"Developer Mode"** on the upper right
-<img src="img/step_4.png">
+    // if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
+    //   chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
+    // } 
+    
+    // else {
+    //   // navigates to sis portal
+    //   chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
+    //   chrome.tabs.update(newTab.id, { active: true });
+    //   });
+    // }
 
-#### 5. Click **"Load Unpacked"** on the upper left
-<img src="img/step_5.png">
+add "//" at the start or remove this line when pushing to main
 
-#### Then select the **"web-extension"** file that you extracted previously
+    chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
 
-<img src="img/step_5.5.png">
+### manifest.json
+Remove file directory from the **matches list** or paste the codeblock below
 
-<br> <br>
+        "matches": [
+            "https://sis1.pup.edu.ph/student/schedule",
+            "https://sis2.pup.edu.ph/student/schedule"
+        ],
 
-#### Taa Daa! You can now use the extension on your browser!
-<img src="img/step_6.png">
-
-# Usage
-#### Click the **"Extension Icon"** to locate the extension. 
-<img src="img/usage1.png">
-
-#### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
-<img src="img/usage.png">
-
-#### You can now go to https://sis2.pup.edu.ph/student/schedule. <br>Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
-
-# Features
-
-### End Date of Recurring Schedule feature
-By default, the generated ICalendar file (.ics) is recurring up to 4 months of the time it was downloaded. <br>
-With this feature, Users have the option to choose when the recurring events should stop by setting an End Date in the ICalendar file. <br>
-<br>
-*Tip: it's a good idea to set the end date to the last day of their semester. This way, the recurring events will automatically stop when the semester ends.*
-
-## TODO
-- [x] Finish readme and introduction
-- [x] Add guide, image tutorial 
-- [ ] Add video tutorial
-- [ ] Add image icons for web extension
-- [x] Implement "End Date of Recurring Schedule" feature
-- [x] Return error at empty schedule
-- [ ] Implement CSV feature
-- [x] Add UI/Styling (Thanks @egg-lou & @yam-1111!)

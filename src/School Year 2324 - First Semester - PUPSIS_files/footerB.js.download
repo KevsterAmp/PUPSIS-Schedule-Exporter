@@ -1,0 +1,38 @@
+
+$(document).ready(function () {
+	 var ErrorModalID = $("#JS_modal").length;
+	 	if (ErrorModalID != 0)
+	 	{
+	  	  $('#JS_modal').modal('show');
+	 	}
+});
+
+
+$(function () 
+	{
+		$(".select2list").select2();
+
+		$('.datatables').DataTable({
+		  "responsive": true,
+		  "paging": false,
+		  "lengthChange": false,
+		  "searching": false,
+		  "ordering": false,
+		  "info": true,
+		  "autoWidth": false
+		});
+		
+		$('.datatables1').DataTable({
+		  "responsive": true,
+		  "paging": false,
+		  "lengthChange": false,
+		  "searching": false,
+		  "ordering": false,
+		  "info": false,
+		  "autoWidth": false
+		});
+	});
+
+
+  
+

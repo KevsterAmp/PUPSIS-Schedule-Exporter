@@ -1,8 +1,13 @@
 document.querySelector('#convertButton').addEventListener('click', function() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     const currentTab = tabs[0];
+    
+    // remove when pushing to main
     chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
     
+    /*
+    remove comments on if else function below when pushing to main
+    */
     // if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
     //   chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
     // } 
