@@ -1,15 +1,16 @@
-  *{
+* {
     font-family: 'Kanit', sans-serif;
     margin: 0 auto;
     padding: 0;
 }
 
-.popup-container{
+.popup-container {
     width: 260px;
-    height: 180px;
+    height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     padding: 10px 15px 10px 15px;
     padding-bottom: 5px;
 }
@@ -25,6 +26,32 @@
     color: white;
     text-align: center;
     font-size: 20px;
+}
+
+.separator {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.date-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+#dateInput {
+    padding: 0.25rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #FCFCFD;
+    color: #36395A;
+    width: 50%;
+    filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
 }
 
 #convertButton {
