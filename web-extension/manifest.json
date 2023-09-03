@@ -9,7 +9,6 @@
     "content_scripts": [
       {
         "matches": [
-          "add the School Year 2324 - First Semester - PUPSIS.html directory here",
           "https://sis1.pup.edu.ph/student/schedule",
           "https://sis2.pup.edu.ph/student/schedule"
         ],

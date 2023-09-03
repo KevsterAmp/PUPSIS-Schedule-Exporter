@@ -17,22 +17,11 @@ This branch is the testing branch for developers that plan to contribute on this
 # Changes when opening a PR to main
 ### popup.js 
 
-remove the comments on the if else function when pushing to main
+set **OVERRIDE_DEV to false**
 
-    // if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
-    //   chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
-    // } 
-    
-    // else {
-    //   // navigates to sis portal
-    //   chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
-    //   chrome.tabs.update(newTab.id, { active: true });
-    //   });
-    // }
+    //set to false when pushing to main
+    const OVERRIDE_DEV = true;
 
-add "//" at the start or remove this line when pushing to main
-
-    chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
 
 ### manifest.json
 Remove file directory from the **matches list** or paste the codeblock below
