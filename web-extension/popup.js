@@ -45,6 +45,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 
+/**
+ *  sets the default value of the date input element
+ * 
+ * @param {number} endDateInMonths - the added month value from now  
+ */
+function setDefaultEndDate(endDateInMonths) {
+    const dateInputElement = document.getElementById("dateInput");
+    const newDate = new Date();
+    newDate.setMonth(newDate.getMonth() + endDateInMonths);
+    dateInputElement.value = newDate.toISOString().slice(0, 10);
+    console.log("set default");
+}
+
+// set the default end date (4 months from now) of the date input 
+setDefaultEndDate(4);
+
 function getDayDate(dayOfWeek) {
   const today = new Date();
   const currentDay = today.getDay(); // 0 (Sunday) to 6 (Saturday)
