@@ -2,8 +2,8 @@ document.querySelector('#convertButton').addEventListener('click', function() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     const currentTab = tabs[0];
     
-    //set to false when pushing to main
-    const OVERRIDE_DEV = true;
+    //set to false when pushing to main, true when testing
+    const OVERRIDE_DEV = false;
     if (!OVERRIDE_DEV) {
       if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
         chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
