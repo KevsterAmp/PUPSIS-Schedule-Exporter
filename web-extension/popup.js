@@ -41,16 +41,42 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     else {
-      const output = separateSchedules(request.schedule);
-      const iCalData = jsonToICal(output);
-      downloadICS(iCalData, "schedule");
 
-      newTag.textContent = "ICalendar file (.ics) downloaded!";
+      const output = separateSchedules(request.schedule);
+
+      // This will first convert the data into the preferred file format 
+      // and then proceed to initiate the download of the converted data
+      let data;
+      let textContent;
+      if (preferredFileType === 'csv') {
+        data = jsonToCSV(output);
+        textContent = "CSV";
+      } else if (preferredFileType === 'ics') {
+        data = jsonToICal(output);
+        textContent = "ICalendar";
+      }
+      downloadFile(data, "schedule", preferredFileType);
+
+      // change the text content depending on the preferred file type
+      newTag.textContent = `${textContent} file (.${preferredFileType}) downloaded!`;
     }
     alertBox.appendChild(newTag);
   }
 });
 
+const fileTypeSelect = document.getElementById("fileType");
+let preferredFileType = fileTypeSelect.value;
+
+// change the value of fileTypeSelect whenever the value of the selection is changed
+fileTypeSelect.addEventListener("change", (e) => {
+    preferredFileType = e.target.value;
+    if (preferredFileType === 'csv') {
+        document.getElementById("dateInput").disabled = true;
+    } else {
+        document.getElementById("dateInput").disabled = false;
+    }
+    
+});
 
 /**
  *  sets the default value of the date input element
@@ -98,6 +124,7 @@ function separateSchedules(data) {
           const output = {
               subject: data[i].subject,
               "Start Date": getDayDate(days[0]),
+              "Scheduled Day": days[0], 
               "All Day Event": "FALSE",
               "Start Time": formatTime(times[0].split("-")[0]),
               "End Time": formatTime(times[0].split("-")[1]),
@@ -111,6 +138,7 @@ function separateSchedules(data) {
               const output = {
                   subject: data[i].subject,
                   "Start Date": getDayDate(days[j]),
+                  "Scheduled Day": days[j],
                   "All Day Event": "FALSE",
                   "Start Time": formatTime(times[j].split("-")[0]),
                   "End Time": formatTime(times[j].split("-")[1]),
@@ -198,17 +226,25 @@ function parseDateTime(dateStr, timeStr) {
 function formatICalDate(date) {
   return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 }
-  
 
-// Function to download .ics file
-function downloadICS(content, filename) {
-  const blob = new Blob([content], { type: 'text/calendar;charset=utf-8' });
+// Function to download with the preferred file type
+function downloadFile(content, filename, fileType) {
+  
+  let contentType;
+  
+  if (fileType === 'csv') {
+    contentType = 'text/csv';
+  } else if (fileType === 'ics') {
+    contentType = 'text/calendar;charset=utf-8';
+  }
+
+  const blob = new Blob([content], {type: contentType});
   const url = URL.createObjectURL(blob);
   
   const a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
-  a.download = filename + '.ics';
+  a.download = filename + `.${fileType.toLowerCase()}`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -220,3 +256,89 @@ function formatTime(timeString) {
   const formattedTime = `${time} ${period.toUpperCase()}`;
   return formattedTime;
 }
+
+// converts 24-hr to 12-hr format
+function strtimeAMPM(date) {
+    let hour = date.getHours();
+    let min = date.getMinutes();
+
+    let ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12;
+    hour = hour === 0 ? 12 : hour;
+
+    return `${hour.toString().padStart(2, "0")}:${min.toString().padStart(2, "0")} ${ampm}`;
+
+}
+
+// generate an array of 30-minute timeslots from a given range
+function generateTimeslots(startHour, endHour) {
+
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+
+    const timeslots = [];
+
+    for (let i = 0; i < 48; i++) {
+
+        if (date.getHours() >= endHour) {
+            break;
+        }
+
+        if (date.getHours() >= startHour) {
+            timeslots.push(strtimeAMPM(date));
+        } 
+        
+        date.setMinutes(date.getMinutes() + 30);
+    }
+
+    return timeslots;
+}
+
+/**
+ * converts an object of schedules to a csv-compatible object
+ * 
+ * @param object - an object containing the rows of the extracted and separated schedule
+ * @returns an object compatible for conversion to csv file
+ */
+function jsonToCSV(output) {
+    
+    const timeslots = generateTimeslots(7, 22);
+
+    const fullDaysOfWeek = [
+        "Sunday", "Monday", "Tuesday", 
+        "Wednesday", "Thursday", "Friday", "Saturday"
+    ];
+
+    const daysOfWeek = ["SUN", "M", "T", "W", "TH", "F", "S"];
+
+    // get the days of the week as the header
+    const headers = ["", [...fullDaysOfWeek]];
+
+    const csv = [];
+    csv[0] = headers;
+
+    // 2d array [timeslots][7];
+    for (let i = 0; i < timeslots.length; i++) {
+        if (i + 1 < timeslots.length) {
+            csv.push([`${timeslots[i]} - ${timeslots[i+1]}`, "", "", "", "", "", "", ""]);
+        }
+    }
+
+    output.forEach(row => {
+        
+        // get all the needed values from the current row
+        let subjectTimeslotIdx = timeslots.indexOf(row["Start Time"]);
+        let dayIdx = daysOfWeek.indexOf(row["Scheduled Day"]);
+        let subject = row["subject"].toString().replace(",", "");
+
+        // set the start time to the end time's timeslot value to the current subject
+        // ex. (8:00 AM - 9:30 AM - <subject>)
+        while (timeslots[subjectTimeslotIdx] !== row["End Time"]) {
+            csv[subjectTimeslotIdx + 1][dayIdx + 1] = subject;
+            subjectTimeslotIdx++;
+        }
+
+    });
+
+    return csv.join('\n');
+};
