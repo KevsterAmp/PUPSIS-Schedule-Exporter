@@ -54,10 +54,28 @@
     filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
 }
 
+#dateInput:disabled {
+    background-color: #e4e2e2;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+}
+
+.convert-container {
+    position: relative;
+    width: 75%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+}
+
 #convertButton {
+    flex: 75;
     align-items: center;
     appearance: none;
-    background-color: #FCFCFD;
+    /* background-color: #FCFCFD; */
     border-radius: 4px;
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
@@ -85,17 +103,29 @@
 }
 
 #convertButton {
-box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
 }
 
 #convertButton:hover {
-box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-transform: translateY(-2px);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
 }
 
-#convertButton:active {
-box-shadow: #D6D6E7 0 3px 7px inset;
-transform: translateY(2px);
+#convertButton:active{
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+#fileType {
+    height: 30px;
+    flex: 25;
+    outline: 0px;
+    border: 0px;
+    box-shadow: none;
+    appearance: none;
+    box-sizing: border-box;
+    color: #36395A;
+    text-align: center;
 }
 
 .btn-txt{

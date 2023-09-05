@@ -1,10 +1,10 @@
 {
     "name": "PUPSIS Schedule Exporter",
-    "version": "1.5",
+    "version": "2.0",
     "icons": {
       "128": "web-icons/web-icon.png"
     },
-    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics)",
+    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics) and csv file",
     "permissions": ["activeTab"],
     "content_scripts": [
       {
