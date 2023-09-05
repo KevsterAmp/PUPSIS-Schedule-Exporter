@@ -31,3 +31,27 @@ Remove file directory from the **matches list** or paste the codeblock below
             "https://sis2.pup.edu.ph/student/schedule"
         ],
 
+# Installation guide for Developers:
+#### 1. Click the **"Code"** button on this repository and then **"Download ZIP"**
+<img src="src/img/step_1.png">
+
+#### 2. Extract the .zip file using WINRAR (or any apps for unzipping)
+<img src="src/img/step_2.png">
+
+#### 3. Click the **three dots** on the upper right side of your browser <br> &nbsp;&nbsp;&nbsp; Click on **"Extensions"** <br> &nbsp;&nbsp;&nbsp; Click on **"Manage Extensions"**
+<img src="src/img/step_3.png">
+
+#### 4. Click **"Developer Mode"** on the upper right
+<img src="src/img/step_4.png">
+
+#### 5. Click **"Load Unpacked"** on the upper left
+<img src="src/img/step_5.png">
+
+#### Then select the **"web-extension"** file that you extracted previously
+
+<img src="src/img/step_5.5.png">
+
+<br> <br>
+
+#### Taa Daa! You can now use the extension on your browser!
+<img src="src/img/step_6.png">
