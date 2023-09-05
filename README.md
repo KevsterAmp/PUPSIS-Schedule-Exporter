@@ -23,4 +23,3 @@ For **developers** that wants to contribute to this project, check the **test/ht
 - [x] Return error at empty schedule
 - [x] Implement CSV feature (Implemented by @szy-kenn!)
 - [x] Add UI/Styling (Thanks @egg-lou, @yam-1111, @szy-kenn!)
-- ~~[ ] Add video tutorial~~
