@@ -10,7 +10,10 @@
       {
         "matches": [
           "https://sis2.pup.edu.ph/student/schedule",
-          "https://sis1.pup.edu.ph/student/schedule"
+          "https://sis1.pup.edu.ph/student/schedule",
+          "https://sis7.pup.edu.ph/student/schedule",
+          "https://sis8.pup.edu.ph/student/schedule"
+
         ],
         "js": ["contentScript.js"]
       }
