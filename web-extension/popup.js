@@ -51,9 +51,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       if (preferredFileType === 'csv') {
         data = jsonToCSV(output);
         textContent = "CSV";
-      } else if (preferredFileType === 'ics') {
+      } 
+      else if (preferredFileType === 'ics') {
         data = jsonToICal(output);
         textContent = "ICalendar";
+      }
+      else if (preferredFileType === 'json') {
+        //insert json function here
+        textContent = "JSON";
       }
       downloadFile(data, "schedule", preferredFileType);
 
@@ -70,7 +75,7 @@ let preferredFileType = fileTypeSelect.value;
 // change the value of fileTypeSelect whenever the value of the selection is changed
 fileTypeSelect.addEventListener("change", (e) => {
     preferredFileType = e.target.value;
-    if (preferredFileType === 'csv') {
+    if (preferredFileType === 'csv' || preferredFileType == 'json') {
         document.getElementById("dateInput").disabled = true;
     } else {
         document.getElementById("dateInput").disabled = false;
@@ -344,3 +349,36 @@ function jsonToCSV(output) {
 
     return csv.join('\n');
 };
+
+/**
+ * 
+ * @param {object} - object containing the rows of the extracted and separated schedule
+ * @returns an object compatible for conversion to Schedulemaker.io via json file 
+ */
+function jsonToScheduleMaker(output) {
+  //temp output of json
+  const output = {
+    "title": "My Schedule",
+    "events": [
+      {
+        "title": "",
+        "description": "",
+        "day": 0,
+        "start": "10:00",
+        "end": "11:00",
+        "color": "#00a7e5",
+        "icon": null
+      },
+    ],
+    "settings": {
+      "timeFormat": 12,
+      "timeStep": 60,
+      "weekLength": 7,
+      "weekStart": 0,
+      "minHourRange": 8,
+      "adaptive": true,
+      "dense": false
+    }
+  }
+  return output
+}
