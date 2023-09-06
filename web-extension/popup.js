@@ -156,6 +156,7 @@ function separateSchedules(data) {
           }
       }
   }
+  console.log(csvObject);
   return csvObject;
 }
 
@@ -349,3 +350,36 @@ function jsonToCSV(output) {
 
     return csv.join('\n');
 };
+
+/**
+ * 
+ * @param {object} - object containing the rows of the extracted and separated schedule
+ * @returns an object compatible for conversion to Schedulemaker.io via json file 
+ */
+function jsonToScheduleMaker(output) {
+  //temp output of json
+  const jsonScheduleMaker = {
+    "title": "My Schedule",
+    "events": [
+      {
+        "title": "",
+        "description": "",
+        "day": 0,
+        "start": "10:00",
+        "end": "11:00",
+        "color": "#00a7e5",
+        "icon": null
+      },
+    ],
+    "settings": {
+      "timeFormat": 12,
+      "timeStep": 60,
+      "weekLength": 7,
+      "weekStart": 0,
+      "minHourRange": 8,
+      "adaptive": true,
+      "dense": false
+    }
+  }
+  return jsonScheduleMaker
+}
