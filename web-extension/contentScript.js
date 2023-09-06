@@ -20,11 +20,9 @@ function parseTableData(tableContent) {
         let temp = data[6].textContent.trim();
         temp = temp.split("Faculty:")
         schedule = temp[0];
-        console.log(temp);
         let instructor = temp[1];
         if (isNumber(schedule[0])) {
             let x = schedule.split(" ");
-            console.log(x);
             x = x.slice(5);
             x = x.join(" ");
             schedule = x;

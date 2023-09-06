@@ -59,7 +59,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       else if (preferredFileType === 'json') {
         data = assignColorsToSubjects(output);
         data = jsonToScheduleMaker(data);
-        console.log(data);
         textContent = "JSON";
       }
       downloadFile(data, "schedule", preferredFileType);
