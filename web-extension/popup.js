@@ -122,6 +122,7 @@ function separateSchedules(data) {
       let times = x[1].split("/");
       if (days.length === 1) {
           const output = {
+              subject_code: data[i].subject_code,
               subject: data[i].subject,
               "Start Date": getDayDate(days[0]),
               "Scheduled Day": days[0], 
@@ -136,6 +137,7 @@ function separateSchedules(data) {
       else {
           for (let j = 0; j < days.length; j++) {
               const output = {
+                  subject_code: data[i].subject_code,
                   subject: data[i].subject,
                   "Start Date": getDayDate(days[j]),
                   "Scheduled Day": days[j],
@@ -329,7 +331,7 @@ function jsonToCSV(output) {
         // get all the needed values from the current row
         let subjectTimeslotIdx = timeslots.indexOf(row["Start Time"]);
         let dayIdx = daysOfWeek.indexOf(row["Scheduled Day"]);
-        let subject = row["subject"].toString().replace(",", "");
+        let subject = row["subject_code"].toString().replace(",", "");
 
         // set the start time to the end time's timeslot value to the current subject
         // ex. (8:00 AM - 9:30 AM - <subject>)
