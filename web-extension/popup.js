@@ -51,9 +51,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       if (preferredFileType === 'csv') {
         data = jsonToCSV(output);
         textContent = "CSV";
-      } else if (preferredFileType === 'ics') {
+      } 
+      else if (preferredFileType === 'ics') {
         data = jsonToICal(output);
         textContent = "ICalendar";
+      }
+      else if (preferredFileType === 'json') {
+        data = assignColorsToSubjects(output);
+        data = jsonToScheduleMaker(data);
+        textContent = "JSON";
       }
       downloadFile(data, "schedule", preferredFileType);
 
@@ -70,7 +76,7 @@ let preferredFileType = fileTypeSelect.value;
 // change the value of fileTypeSelect whenever the value of the selection is changed
 fileTypeSelect.addEventListener("change", (e) => {
     preferredFileType = e.target.value;
-    if (preferredFileType === 'csv') {
+    if (preferredFileType === 'csv' || preferredFileType == 'json') {
         document.getElementById("dateInput").disabled = true;
     } else {
         document.getElementById("dateInput").disabled = false;
@@ -124,13 +130,10 @@ function separateSchedules(data) {
           const output = {
               subject_code: data[i].subject_code,
               subject: data[i].subject,
-              "Start Date": getDayDate(days[0]),
-              "Scheduled Day": days[0], 
-              "All Day Event": "FALSE",
-              "Start Time": formatTime(times[0].split("-")[0]),
-              "End Time": formatTime(times[0].split("-")[1]),
-              Location: "",
-              Description: ""
+              start_date: getDayDate(days[0]),
+              scheduled_day: days[0], 
+              start_time: formatTime(times[0].split("-")[0]),
+              end_time: formatTime(times[0].split("-")[1])
           }
           csvObject.push(output);
       }
@@ -139,13 +142,10 @@ function separateSchedules(data) {
               const output = {
                   subject_code: data[i].subject_code,
                   subject: data[i].subject,
-                  "Start Date": getDayDate(days[j]),
-                  "Scheduled Day": days[j],
-                  "All Day Event": "FALSE",
-                  "Start Time": formatTime(times[j].split("-")[0]),
-                  "End Time": formatTime(times[j].split("-")[1]),
-                  Location: "",
-                  Description: ""
+                  start_date: getDayDate(days[j]),
+                  scheduled_day: days[j],
+                  start_time: formatTime(times[j].split("-")[0]),
+                  end_time: formatTime(times[j].split("-")[1])
               }
               csvObject.push(output);
           }
@@ -176,9 +176,9 @@ PRODID:-//PUPSIS TO ICS//Event Calendar//EN\n`;
   }
 
   for (const event of events) {
-    const uid = event.subject.replace(/\s+/g, '') + event['Start Date'] + event['Start Time'];
-    const startDate = parseDateTime(event['Start Date'], event['Start Time']);
-    const endDate = parseDateTime(event['Start Date'], event['End Time']);
+    const uid = event.subject.replace(/\s+/g, '') + event['start_date'] + event['start_time'];
+    const startDate = parseDateTime(event['start_date'], event['start_time']);
+    const endDate = parseDateTime(event['start_date'], event['end_time']);
 
     if (!startDate || !endDate) {
       console.error('Invalid date or time format.');
@@ -236,8 +236,13 @@ function downloadFile(content, filename, fileType) {
   
   if (fileType === 'csv') {
     contentType = 'text/csv';
-  } else if (fileType === 'ics') {
+  } 
+  else if (fileType === 'ics') {
     contentType = 'text/calendar;charset=utf-8';
+  } 
+  else if (fileType === "json") {
+    content = JSON.stringify(content, null, 2);
+    contentType = "application/json"
   }
 
   const blob = new Blob([content], {type: contentType});
@@ -329,13 +334,13 @@ function jsonToCSV(output) {
     output.forEach(row => {
         
         // get all the needed values from the current row
-        let subjectTimeslotIdx = timeslots.indexOf(row["Start Time"]);
-        let dayIdx = daysOfWeek.indexOf(row["Scheduled Day"]);
+        let subjectTimeslotIdx = timeslots.indexOf(row["start_time"]);
+        let dayIdx = daysOfWeek.indexOf(row["scheduled_day"]);
         let subject = row["subject_code"].toString().replace(",", "");
 
-        // set the start time to the end time's timeslot value to the current subject
+        // set the start_time to the end_time's timeslot value to the current subject
         // ex. (8:00 AM - 9:30 AM - <subject>)
-        while (timeslots[subjectTimeslotIdx] !== row["End Time"]) {
+        while (timeslots[subjectTimeslotIdx] !== row["end_time"]) {
             csv[subjectTimeslotIdx + 1][dayIdx + 1] = subject;
             subjectTimeslotIdx++;
         }
@@ -344,3 +349,109 @@ function jsonToCSV(output) {
 
     return csv.join('\n');
 };
+
+
+/**
+ * 
+ * @param {object} - object containing the rows of the extracted and separated schedule
+ * @returns an object compatible for conversion to Schedulemaker.io via json file 
+ */
+function jsonToScheduleMaker(output) {
+  //temp output of json
+  let events = [];
+  const jsonDaysWeek = ['M', 'T', 'W', 'TH', 'F', 'S', 'SUN']
+  for (let i = 0; i < output.length; i++) {
+      const eventEntry = {
+        title: output[i].subject,
+        description: "",
+        day: jsonDaysWeek.indexOf(output[i].scheduled_day),
+        start: convert12hrTo24hr(output[i].start_time),
+        end: convert12hrTo24hr(output[i].end_time),
+        color: output[i].color,
+        icon: null
+      }
+      events.push(eventEntry);
+  }
+  const jsonScheduleMaker = {
+    "title": "My Schedule",
+    "events": events,
+    "settings": {
+      "timeFormat": 12,
+      "timeStep": 60,
+      "weekLength": 7,
+      "weekStart": 0,
+      "minHourRange": 8,
+      "adaptive": true,
+      "dense": false
+    }
+  }
+  return jsonScheduleMaker
+}
+
+
+/**
+ * 
+ * @param {time} - time in 12hr format  
+ * @returns - time in 24hr format
+ */
+function convert12hrTo24hr(time12hr) {
+  // Split the input time into hours, minutes, and AM/PM parts
+  const parts = time12hr.match(/(\d+):(\d+) (AM|PM)/);
+
+  if (!parts || parts.length !== 4) {
+    // Invalid input format
+    return "Invalid time format";
+  }
+
+  let hours = parseInt(parts[1]);
+  const minutes = parseInt(parts[2]);
+  const period = parts[3];
+
+  if (hours === 12) {
+    // 12 AM should be converted to 00:00
+    if (period === "AM") {
+      hours = 0;
+    }
+  } else if (period === "PM") {
+    // Convert PM hours to 24-hour format
+    hours += 12;
+  }
+
+  // Format the result as HH:mm
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+
+/**
+ * 
+ * @param {object} - the array of schedules created by separateSchedules function
+ * @returns - object with added color format
+ */
+function assignColorsToSubjects(output) {
+  const subjects = output.map(item => item.subject);
+  const uniqueSubjects = [...new Set(subjects)];
+  const colors = [
+    '#FF5733', // Dark Coral
+    '#3377FF', // Medium Blue
+    '#FF338A', // Dark Pink
+    '#3333FF', // Dark Slate Blue
+    '#FF33A4', // Dark Magenta
+    '#33B0FF', // Deep Sky Blue
+    '#FF9D33', // Dark Orange
+    '#3367FF', // Royal Blue
+    '#FF336A', // Red-Orange
+    '#33FFD4', // Medium Aquamarine
+    '#FF3333', // Dark Red
+  ];
+    
+  const colorMap = {};
+
+  uniqueSubjects.forEach((subject, index) => {
+    colorMap[subject] = colors[index];
+  });
+
+  return output.map(item => ({
+    ...item,
+    color: colorMap[item.subject],
+  }));
+}
