@@ -3,8 +3,8 @@ A web extension that converts the schedule of students from PUPSIS to ICalendar 
 
 **WARNING, WEB-EXTENSION IN GOOGLE CHROME IS OUTDATED** <br>
 **GO TO [INSTALLATION GUIDE](img/README.md) TO DOWNLOAD UPDATED WEB EXTENSION** <br>
-**WILL REEDIT README ONCE THE WEB EXTENSION IN CHROME IS UPDATED** <br>
-web-extension installation: https://chrome.google.com/webstore/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch
+**WILL RE-EDIT README ONCE THE WEB EXTENSION IN CHROME IS UPDATED** <br>
+~~web-extension installation: https://chrome.google.com/webstore/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch~~
 
 This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
 
