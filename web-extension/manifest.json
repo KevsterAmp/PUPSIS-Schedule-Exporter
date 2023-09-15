@@ -4,7 +4,7 @@
     "icons": {
       "128": "web-icons/web-icon.png"
     },
-    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics) and csv file",
+    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics), csv and json file",
     "permissions": ["activeTab"],
     "content_scripts": [
       {
