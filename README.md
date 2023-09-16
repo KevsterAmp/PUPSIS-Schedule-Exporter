@@ -6,10 +6,6 @@ installation link: https://chrome.google.com/webstore/detail/pupsis-schedule-exp
 
 This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
 
-**IMPORTANT!!** <BR>
-For **developers** that wants to contribute to this project, check the **test/html** branch for more instructions.
-<br>
-
 
 # Features
 - convert to ICalendar (.ics) format, used for easy export on popular calendar tools like Google Calendar
