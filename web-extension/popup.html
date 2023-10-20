@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,16 @@
     <link rel="stylesheet" type="text/css" href="popup.css">
     <title>PUPSIS-Schedule-Exporter</title>
 </head>
+
 <body>
     <div class="html-container">
         <div class="popup-container">
             <h2 class="pop-title">PUPSIS-Schedule-Exporter</h2>
             <hr class="separator">
             <div class="date-input-container">
-                <label for="dateInput"> <p class="label-text">Select end date of recurring schedule:</p></label>
+                <label for="dateInput">
+                    <p class="label-text">Select end date of recurring schedule:</p>
+                </label>
                 <input type="date" id="dateInput" name="dateInput">
             </div>
             <div class="convert-container">
@@ -24,18 +28,25 @@
                     <option value="json">.json</option>
                 </select>
             </div>
-            
+
         </div>
+        <button id="editButton">
+            <span class="btn-txt">Edit my schedule</span>
+        </button>
 
-            <div id="display-box">
 
-            </div>
+
+        <div id="display-box">
+
+        </div>
         <div class="tail">
-            <a href="https://www.flaticon.com/free-icons/plugins" title="plugins icons" id="plugin">Plugins icon created by juicy_fish - Flaticon</a>
+            <a href="https://www.flaticon.com/free-icons/plugins" title="plugins icons" id="plugin">Plugins icon created
+                by juicy_fish - Flaticon</a>
         </div>
     </div>
-    
 
-    <script src="popup.js"></script>
+
+    <script type="module" src="popup.js"></script>
 </body>
+
 </html>

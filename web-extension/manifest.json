@@ -1,6 +1,6 @@
 {
     "name": "PUPSIS Schedule Exporter",
-    "version": "3.1.1",
+    "version": "4.0.0",
     "icons": {
       "128": "web-icons/web-icon.png"
     },
@@ -15,9 +15,11 @@
           "https://sis8.pup.edu.ph/student/schedule"
 
         ],
-        "js": ["contentScript.js"]
+        "js": ["contentScript.js", "editSched.js"]
       }
     ],
+
+
     "action": {
       "default_title": "PUPSIS Schedule Exporter",
       "default_popup": "popup.html",

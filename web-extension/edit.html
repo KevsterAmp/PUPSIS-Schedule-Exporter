@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="edit.css">
+    <title>Edit schedule</title>
+</head>
+<body>
+    <div class="html-container">
+        <div class="table-container">
+            <table id="table-content">
+                <thead>
+                    <tr>
+                        <th>Schedule time</th>
+                        <th>Schedule day</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <p id="bottom-text"></p>
+        <div class="bottom-buttons">
+            <div class="date-input-container">
+                <input type="date" id="dateInput" name="dateInput">
+            </div>
+
+            <div class="convert-container">
+                <button id="convertButton"><span class="btn-txt">Convert to</span></button>
+                <select name="file-type" id="fileType">
+                    <option class="btn-txt"value="ics" selected>.ics</option>
+                    <option class="btn-txt"value="csv">.csv</option>
+                    <option class="btn-txt"value="json">.json</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="editSched.js"></script>
+</body>
+
+</html>

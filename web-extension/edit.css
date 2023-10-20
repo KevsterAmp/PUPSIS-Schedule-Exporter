@@ -1,0 +1,275 @@
+
+/*globals*/
+
+
+* {
+    font-family: 'Kanit', sans-serif;
+    margin: 0 auto;
+    padding: 0;
+    color: white;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px; 
+}
+
+.col {
+    flex: 1;
+    padding: 10px; 
+}
+
+
+
+.separator {
+    width: 100%;
+    border: none;
+    height: .5px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.ext-title{
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+
+/* ediitsched.html css*/
+
+.html-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #39373c;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.18' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");   
+}
+
+
+
+.table-container {
+    width: 95%; 
+    height: 350px; 
+    overflow: auto; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #39373c;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.18' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");  
+    border: 1px solid #fff;  
+}
+
+
+/*buttons*/
+.dateBox {
+    padding: 3px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background-color: #FCFCFD;
+    color: #36395A;
+    filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
+}
+
+.inputBox{
+    border-radius: 5px;
+    border-color: #FCFCFD;
+    color: #36395A;
+    filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
+
+}
+
+.disabled-inputBox{
+    opacity: 0.5;
+}
+
+.descriptionBox{
+    height: 30px;
+}
+
+.date-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#dateInput {
+    padding: 0.25rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #FCFCFD;
+    color: #36395A;
+    width: 100%;
+    filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
+}
+
+#dateInput:disabled {
+    background-color: #e4e2e2;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+}
+
+/*Edit button*/
+.deleteButton {
+    flex: 75;
+    align-items: center;
+    appearance: none;
+    /* background-color: #FCFCFD; */
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 35px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+}
+
+.deleteButton:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.deleteButton:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+
+/*bottom buttons container*/
+.bottom-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/*convertButtons*/
+
+.convert-container {
+    position: relative;
+    width: 40%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+}
+
+#convertButton {
+    flex: 75;
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 35px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+}
+
+#convertButton {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+#convertButton:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+#convertButton:active{
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+#fileType {
+    height: 30px;
+    flex: 25;
+    outline: 0px;
+    border: 0px;
+    box-shadow: none;
+    appearance: none;
+    box-sizing: border-box;
+    color: #36395A;
+    text-align: center;
+}
+
+.btn-txt{
+    font-size: px;
+    color: #36395A;
+}
+
+.scheduledDay{
+    color: #36395A;
+}
+.inputBox:disabled
+.dateBox:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#bottom-text{
+    font-size: 18px;
+    text-align: center;
+    display: none;
+}
+
+
+
