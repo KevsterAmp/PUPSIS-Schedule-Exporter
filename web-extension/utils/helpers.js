@@ -94,9 +94,21 @@ export function parseDateTime(dateStr, timeStr) {
   return parsedDate;
 }
 
-// Function to format date as iCalendar date-time format (yyyyMMddTHHmmssZ)
+/**format date as iCalendar(ics) date-time format (yyyyMMddTHHmmssZ)
+ * 
+ * @param {*} date 
+ * @returns {string} - formatted date
+ */
 export function formatICalDate(date) {
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Return in iCal format without converting to UTC
+  return `${year}${month}${day}T${hours}${minutes}${seconds}`;
 }
 
 export function formatTime(timeString) {
@@ -107,6 +119,7 @@ export function formatTime(timeString) {
 
 /**converts 24-hr to 12-hr format
  * @param {number} date 
+ * @returns {string} - time in 12hr format
 */
 export function convert24hrto12hr(date) {
   let hour = date.getHours();
