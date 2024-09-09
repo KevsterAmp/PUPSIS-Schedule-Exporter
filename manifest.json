@@ -1,31 +1,29 @@
 {
-    "name": "PUPSIS Schedule Exporter",
-    "version": "4.0.0",
+  "name": "PUPSIS Schedule Exporter",
+  "version": "4.0.1",
+  "icons": {
+    "128": "web-icons/web-icon.png"
+  },
+  "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics), csv and json file",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sis2.pup.edu.ph/student/schedule",
+        "https://sis1.pup.edu.ph/student/schedule",
+        "https://sis7.pup.edu.ph/student/schedule",
+        "https://sis8.pup.edu.ph/student/schedule"
+      ],
+      "js": ["contentScript.js", "editSched.js"]
+    }
+  ],
+
+  "action": {
+    "default_title": "PUPSIS Schedule Exporter",
+    "default_popup": "popup.html",
     "icons": {
-      "128": "web-icons/web-icon.png"
-    },
-    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics), csv and json file",
-    "permissions": ["activeTab"],
-    "content_scripts": [
-      {
-        "matches": [
-          "https://sis2.pup.edu.ph/student/schedule",
-          "https://sis1.pup.edu.ph/student/schedule",
-          "https://sis7.pup.edu.ph/student/schedule",
-          "https://sis8.pup.edu.ph/student/schedule"
-
-        ],
-        "js": ["contentScript.js", "editSched.js"]
-      }
-    ],
-
-
-    "action": {
-      "default_title": "PUPSIS Schedule Exporter",
-      "default_popup": "popup.html",
-      "icons": {
-        "16": "web-icons/web-icon.png"
-      }
-    },
-    "manifest_version": 3
+      "16": "web-icons/web-icon.png"
+    }
+  },
+  "manifest_version": 3
 }
