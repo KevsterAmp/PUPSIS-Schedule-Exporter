@@ -30,5 +30,6 @@ We may update this Privacy Policy from time to time to reflect changes in the Ap
 
 If you have any questions about this Privacy Policy or the Application, please contact us via the following channels:
 
-GitHub: PUPSIS Schedule Exporter Repository Issues
+GitHub: PUPSIS Schedule Exporter
+<br>
 Email: [kevinamparado13@gmail.com]
