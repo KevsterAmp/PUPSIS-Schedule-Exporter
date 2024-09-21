@@ -1,0 +1,62 @@
+{
+    "manifest_version": 3,
+    "name": "PUPSIS Schedule Exporter",
+    "version": "4.0.1",
+    "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics), CSV, and JSON file",
+    "author": "Kevin Christian Amparado, Anthony John Hinay (Firefox), & contributors",
+    "icons": {
+      "128": "web-icons/web-icon.png"
+    },
+    "permissions": [
+      "activeTab"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://sis2.pup.edu.ph/student/schedule",
+          "https://sis1.pup.edu.ph/student/schedule",
+          "https://sis7.pup.edu.ph/student/schedule",
+          "https://sis8.pup.edu.ph/student/schedule"
+        ],
+        "js": ["contentScript.js"]
+      }
+    ],
+    "action": {
+      "default_title": "PUPSIS Schedule Exporter",
+      "default_popup": "popup.html",
+      "default_icon": {
+        "128": "web-icons/web-icon.png"
+      }
+    },
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "pupsis-schedule-exporter@yourdomain.com",
+        "strict_min_version": "114.0"
+      },
+      "gecko_android": {
+        "strict_min_version": "114.0"
+      }
+    },
+    "optional_permissions": [
+      "<all_urls>"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "web-icons/*",
+          "css/*",
+          "utils/*",
+          "popup.html",
+          "contentScript.js",
+          "editSched.js"
+        ],
+        "matches": [
+          "https://sis1.pup.edu.ph/*",
+          "https://sis2.pup.edu.ph/*",
+          "https://sis7.pup.edu.ph/*",
+          "https://sis8.pup.edu.ph/*"
+        ]
+      }
+    ]
+  }
+  

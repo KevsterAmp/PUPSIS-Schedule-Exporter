@@ -1,5 +1,6 @@
 {
   "name": "PUPSIS Schedule Exporter",
+  "author" : "Kevin Christian Amparado",
   "version": "4.0.1",
   "icons": {
     "128": "web-icons/web-icon.png"
