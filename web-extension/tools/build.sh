@@ -62,28 +62,37 @@ zip_files(){
     
     echo "*** Creating .zip for $platform web browser***"
     
-    
+    # getting the version from the version file
+    if [ ! -f dist/version ]; then
+        echo "[!] Version file not found"
+        version=""
+    else
+        version=$(cat dist/version)
+        echo "*** Found version :  $version ***"
+    fi
+
+
     # Set the zip name based on the platform
     if [ "$platform" = "chromium" ] || [ "$platform" = "edge" ]; then
-        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform.zip"
+        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.zip"
         
     elif [[ "$platform" =~ "firefox" ]]; then
-        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform.xpi"
+        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.xpi"
     else
         echo "[!] Invalid platform"
         return 1
     fi
     
-    echo "$ZIP_NAME $destination"
-    
     # Change into the destination directory and zip the contents
     (
         cd "$destination" || exit 1
-        zip -r "../$ZIP_NAME" ./*
+        zip -qr "../$ZIP_NAME" ./*
     )
     
     # Move the generated zip file to the build directory
     mv "$destination/../$ZIP_NAME" "$dist_dir/dist/build"
+    rm -rf "$destination"
+    echo "*** Finished Creating $ZIP_NAME ***"
 }
 
 ##### Main #####
@@ -144,6 +153,7 @@ if [ "$PLATFORM" = "" ]; then
         
         # Clean up temporary directory
         rm -rf "$TEMP_DIR"
+        echo "*** Finished creating all zip files ***"
         exit 0
     else
         for platform in "${platforms[@]}"; do
@@ -152,6 +162,8 @@ if [ "$PLATFORM" = "" ]; then
             copy_common_files "$DEST"
             copy_platform_files "$platform" "$DEST"
         done
+        echo "*** Finished building all extensions ***"
+        exit 0
     fi
 else
     mkdir -p dist/build
@@ -171,5 +183,8 @@ else
     if [ "$PUBLISH" = true ]; then
         zip_files "$PLATFORM" "$DEST" "$(pwd)"
         rm -rf "$DEST"
+        echo "*** Finished creating $PLATFORM zip file ***"
+        exit 0
     fi
+    echo *** Finished building $PLATFORM extension ***
 fi
