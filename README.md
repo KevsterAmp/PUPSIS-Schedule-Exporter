@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg?style=for-the-badge&color=%23FBBC04)](https://opensource.org/licenses/MIT)
-[![Chrome Web Store User](https://img.shields.io/chrome-web-store/v/hilepoofffgmdlappbbggkhppjijhkch?style=for-the-badge&logo=chromewebstore&logoColor=white&color=%2334A853)](https://chromewebstore.google.com/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/hilepoofffgmdlappbbggkhppjijhkch?style=for-the-badge&logo=chromewebstore&logoColor=white&color=%2334A853)](https://chromewebstore.google.com/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch)
 [![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/hilepoofffgmdlappbbggkhppjijhkch?style=for-the-badge&logo=chromewebstore&logoColor=white&color=%23EA4335)](https://chromewebstore.google.com/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch)
 
 
