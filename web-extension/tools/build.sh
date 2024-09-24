@@ -73,7 +73,7 @@ zip_files(){
 
 
     # Set the zip name based on the platform
-    if [ "$platform" = "chromium" ] || [ "$platform" = "edge" ]; then
+    if [ "$platform" = "chrome" ] || [ "$platform" = "edge" ]; then
         ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.zip"
         
     elif [[ "$platform" =~ "firefox" ]]; then
@@ -102,15 +102,15 @@ PLATFORM=""
 
 # Check if there are no arguments
 if [ $# -eq 0 ]; then
-    echo "[!] Error: No arguments provided. Please specify a platform (e.g., chromium, firefox-mv3, etc.)."
+    echo "[!] Error: No arguments provided. Please specify a platform (e.g., chrome, firefox-mv3, etc.)."
     exit 1
 fi
 
 # Create the build directory
 for i in "$@"; do
     case $i in
-        chromium)
-            PLATFORM="chromium"
+        chrome)
+            PLATFORM="chrome"
         ;;
         firefox-mv2)
             PLATFORM="firefox-mv2"
@@ -138,7 +138,7 @@ done
 
 echo "*** Building mode: Building the extension ***"
 if [ "$PLATFORM" = "" ]; then
-      platforms=("chromium" "edge" "firefox-mv2" "firefox-mv3")
+      platforms=("chrome" "edge" "firefox-mv2" "firefox-mv3")
     if [ "$PUBLISH" = true ]; then
         echo "*** Publishing mode: Packaging the extension ***"
         mkdir -p dist/build

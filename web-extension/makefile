@@ -10,7 +10,7 @@ OS := $(shell uname)
 chrome:
 	if [ "$(OS)" = "Linux" ]; then \
 		echo "Detected OS: Linux"; \
-		bash tools/build.sh chromium; \
+		bash tools/build.sh chrome; \
 	else \
 		echo "This build process is only supported on Linux."; \
 	fi
