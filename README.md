@@ -26,7 +26,7 @@ A web extension that converts the schedule of students from PUPSIS to ICalendar 
 This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
 
 
-# Features
+## Features
 - convert to ICalendar (.ics) format, used for easy export on popular calendar tools like Google Calendar
 - convert to CSV, in a calendar style format, for users that do not use any calendar tools. 
 - convert to JSON, which can be imported on [schedulemaker.io](https://schedulemaker.io/)
