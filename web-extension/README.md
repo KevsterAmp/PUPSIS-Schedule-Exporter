@@ -1,5 +1,4 @@
 
-# Web Extension Build and Publish Scripts
 
 ## Building the extension
 This contains the necessary scripts to build and publish web extensions for various browsers including Chromium-based browsers (Chrome, Edge) and Gecko-based browsers (Firefox).
