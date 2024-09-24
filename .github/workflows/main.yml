@@ -23,6 +23,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential
+          cd web-extension
           make publish  # Running your make publish command which generates multiple files
 
       # Step 3: Create a GitHub release
