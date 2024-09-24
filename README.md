@@ -1,7 +1,26 @@
-# PUPSIS-Schedule-Exporter
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg?style=for-the-badge&color=%23FBBC04)](https://opensource.org/licenses/MIT)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/hilepoofffgmdlappbbggkhppjijhkch?style=for-the-badge&logo=chromewebstore&logoColor=white&color=%2334A853)](https://chromewebstore.google.com/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch)
+[![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/hilepoofffgmdlappbbggkhppjijhkch?style=for-the-badge&logo=chromewebstore&logoColor=white&color=%23EA4335)](https://chromewebstore.google.com/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch)
+
+
+***
+<h1 align="center">
+    <sub>
+        <img src="./web-extension/src/web-icons/web-icon.png" alt="extension-icon" height="38" width="38"> 
+    </sub>
+    PUPSIS Schedule Exporter
+</h1>
+<p align="center">
 A web extension that converts the schedule of students from PUPSIS to ICalendar (.ics), csv or json so that they can easily import their schedules on other popular calendar tools like Google Calendar.
-  
-installation link: https://chrome.google.com/webstore/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch
+</p>
+<p align="center">
+    <a href="https://chrome.google.com/webstore/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch">
+    <img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="PUPSIS Schedule Exporter"></a>
+</p>
+
+
+***
+
 
 
 This project aims to help PUP Students to easily sync their Schedules to their desired Calendar tools.
