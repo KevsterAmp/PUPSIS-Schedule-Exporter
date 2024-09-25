@@ -186,5 +186,5 @@ else
         echo "*** Finished creating $PLATFORM zip file ***"
         exit 0
     fi
-    echo *** Finished building $PLATFORM extension ***
+    echo "*** Finished building $PLATFORM extension ***"
 fi
