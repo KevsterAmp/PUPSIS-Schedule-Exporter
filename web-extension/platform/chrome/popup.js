@@ -2,7 +2,7 @@ import * as helpers from './utils/helpers.js';
 import * as exports from './utils/exports.js';
 
 
-// Debugging FLAGS
+// Debugging FLAGS (use when in local copy of SIS page)
 const OVERRIDE_DEV = false;
 
 
@@ -11,11 +11,15 @@ function handleClickEvent(){
       const currentTab = tabs[0];
       
       //set to false when pushing to main, true when testing
-        if (OVERRIDE_DEV || (/sis.*\/student\/schedule$/).test(currentTab.url)) {
+        if (OVERRIDE_DEV) {
+          chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
+        }
+      // checks if SIS portal is open and extracts
+        else if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
           chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
         } 
+      // opens new tab with SIS page
         else {
-          // navigates to sis portal
           chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
           chrome.tabs.update(newTab.id, { active: true });
           });

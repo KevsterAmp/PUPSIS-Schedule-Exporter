@@ -12,13 +12,19 @@ function handleClickEvent() {
       const currentTab = tabs[0];
 
       // Check if the URL matches the expected pattern
-      if (OVERRIDE_DEV || (/sis.*\/student\/schedule$/).test(currentTab.url)) {
+      if (OVERRIDE_DEV) {
           // Send message to the content script to extract schedule
           browser.tabs.sendMessage(currentTab.id, { type: 'getschedule' })
               .catch((error) => {
                   console.error('Error sending message to content script:', error);
               });
-      } else {
+      }else if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
+          // Send message to the content script to extract schedule
+          browser.tabs.sendMessage(currentTab.id, { type: 'getschedule' })
+              .catch((error) => {
+                  console.error('Error sending message to content script:', error);
+              });
+      }else {
           // If the user is not on the schedule page, open the SIS portal
           browser.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' });
       }
