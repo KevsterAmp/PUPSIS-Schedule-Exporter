@@ -15,10 +15,10 @@ A web extension that converts the schedule of students from PUPSIS to ICalendar 
 </p>
 <p align="center">
     <a href="https://chrome.google.com/webstore/detail/pupsis-schedule-exporter/hilepoofffgmdlappbbggkhppjijhkch">
-        <img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="PUPSIS Schedule Exporter">
+        <img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get PUPSIS Schedule Exporter">
     </a>
     <a href="https://microsoftedge.microsoft.com/addons/detail/pupsis-schedule-exporter/fpphljadlnfmcefbcicdbmpckjdjedia">
-        <img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get uBlock Origin for Microsoft Edge">
+        <img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get PUPSIS-Schedule-Exporter for edge">
     </a>
 </p>
 
