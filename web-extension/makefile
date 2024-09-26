@@ -1,7 +1,7 @@
 # Description: Makefile for building the web extension for different browsers.
 # this script assumes Linux as the build environment
 
-.PHONY: chrome edge firefox firefox-mv3 chrome-publish edge-publish firefox-publish firefox-mv3-publish publish clean
+.PHONY: chrome edge firefox firefox-mv3 chrome-test firefox-test edge-test chrome-publish edge-publish firefox-publish firefox-mv3-publish publish clean
 
 # check the os if linux or windows
 OS := $(shell uname)
@@ -50,6 +50,30 @@ unpacked:
 	else \
 		echo "This build process is only supported on Linux."; \
 	fi
+
+########### test scripts (UNPACKED) ###########
+chrome-test:
+	if [ "$(OS)" = "Linux" ]; then \
+		echo "Detected OS: Linux"; \
+		bash tools/build.sh chrome debug; \
+	else \
+		echo "This build process is only supported on Linux."; \
+	fi
+firefox-test:
+	if [ "$(OS)" = "Linux" ]; then \
+		echo "Detected OS: Linux"; \
+		bash tools/build.sh firefox-mv2 debug; \
+	else \
+		echo "This build process is only supported on Linux."; \
+	fi
+edge-test:
+	if [ "$(OS)" = "Linux" ]; then \
+		echo "Detected OS: Linux"; \
+		bash tools/build.sh edge debug; \
+	else \
+		echo "This build process is only supported on Linux."; \
+	fi
+
 
 ########### publish scripts ###########
 # publish script for chrome (chromium-based)

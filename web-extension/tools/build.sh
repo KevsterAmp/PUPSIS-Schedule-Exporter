@@ -16,32 +16,6 @@ building_platform(){
     mkdir -p $destination
 }
 
-# copy_platform_files(platform)
-copy_platform_files() {
-    local platform=$1
-    local destination=$2
-    local version_file="dist/version"
-    local manifest="$destination/manifest.json"
-
-    echo "*** Copying $platform-specific files ***"
-    
-    # Copy the platform-specific files
-    cp platform/$platform/manifest.json $destination
-    cp platform/$platform/contentScript.js $destination
-    cp platform/$platform/popup.js $destination
-
-    # Check if the version file exists
-    if [ -f "$version_file" ]; then
-        # Get the version from the version file
-        local version=$(cat "$version_file")
-        echo "*** Modifying manifest.json with version $version ***"
-        # Use sed to modify the "version" field in manifest.json
-        sed -i "s/\"version\": \".*\"/\"version\": \"$version\"/" "$manifest"
-    else
-        echo "[!] Version file not found: $version_file"
-    fi
-}
-
 copy_common_files(){
     echo "*** Copying common files (/css, /js, /web-icons) ***"
     local destination=$1
@@ -54,7 +28,46 @@ copy_common_files(){
     cp src/editSched.js $destination
 }
 
-##### publishing mode #####
+# copy_platform_files(platform)
+copy_platform_files() {
+    local platform=$1
+    local destination=$2
+    local version_file="dist/version"
+    local manifest="$destination/manifest.json"
+    local popup="$destination/popup.js"
+    
+    echo "*** Copying $platform-specific files ***"
+    
+    # Copy the platform-specific files
+    cp platform/$platform/manifest.json $destination
+    cp platform/$platform/contentScript.js $destination
+    cp platform/$platform/popup.js $destination
+    
+    # Check if the version file exists
+    if [ -f "$version_file" ]; then
+        # Get the version from the version file
+        local version=$(cat "$version_file")
+        echo "*** Modifying manifest.json with version $version ***"
+        # Use sed to modify the "version" field in manifest.json
+        sed -i "s/\"version\": \".*\"/\"version\": \"$version\"/" "$manifest"
+    else
+        echo "[!] Version file not found: $version_file"
+    fi
+    
+    # if case for testing
+    if [ "$TEST" ]; then
+        echo "*** DEBUG MODE : Modifying manifest.json & popup.js for testing/debugging ***"
+        
+        # Modify manifest.json to replace matches array with <all_urls>
+        sed -i '/"matches": \[/,/\],/c\      "matches": [\n        "<all_urls>"\n      ],' "$manifest"
+        echo "Modified manifest.json to use <all_urls>."
+        
+        # Modify popup.js to set OVERRIDE_DEV = true and add a newline with the comment
+        sed -i 's/^const OVERRIDE_DEV = .*$/const OVERRIDE_DEV = true; \/\/ MODIFIED by the build.sh, SET TO false when publishing/' "$popup"
+        echo "Modified popup.js to set OVERRIDE_DEV = true."
+    fi
+}
+
 zip_files(){
     local platform=$1
     local destination=$2
@@ -70,13 +83,13 @@ zip_files(){
         version=$(cat dist/version)
         echo "*** Found version :  $version ***"
     fi
-
-
+    
+    
     # Set the zip name based on the platform
     if [ "$platform" = "chrome" ] || [ "$platform" = "edge" ]; then
         ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.zip"
         
-    elif [[ "$platform" =~ "firefox" ]]; then
+        elif [[ "$platform" =~ "firefox" ]]; then
         ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.xpi"
     else
         echo "[!] Invalid platform"
@@ -95,10 +108,45 @@ zip_files(){
     echo "*** Finished Creating $ZIP_NAME ***"
 }
 
+print_config(){
+    echo "---- Building configuration: ----"
+    # if all platforms are being built then print all platforms
+    if [ "$PLATFORM" = "" ]; then
+        echo "  Platform: All"
+    else
+        echo "  Platform: $PLATFORM"
+    fi
+    
+    # if zipped then print the publish mode as zip else print the unpacked mode
+    echo "  Publish Mode (Zip): $PUBLISH"
+    
+    # if zipped then print the destination as /dist/build else print the destination
+    if [ "$PUBLISH" = true ] || [ "$PLATORM" = "" ]; then
+        echo "  Destination: /dist/build"
+    else
+        echo "  Destination: $DEST"
+    fi
+
+    # version
+    if [ -f dist/version ]; then
+        echo "  Version: $(cat dist/version)"
+    else
+        echo "  Version: N/A"
+    fi
+    
+    # if test mode is set then print the test mode
+    if [ "$TEST" ]; then
+        echo "  Debug Mode: $TEST"
+        echo "  ! Note: The extension is set to run on all URLs."
+        echo "  ! OVERRIDE_DEV=true in popup.js."
+    fi
+    echo "---------------------------------"
+}
 ##### Main #####
 # Set the build directory
 echo "*** Building PUPSIS-Schedule Exporter MV3 ***"
 PLATFORM=""
+PUBLISH=false
 
 # Check if there are no arguments
 if [ $# -eq 0 ]; then
@@ -127,6 +175,9 @@ for i in "$@"; do
         unpacked)
             PUBLISH=false
         ;;
+        debug)
+            TEST=true
+        ;;
         *)
             echo "[!] Invalid argument: $i"
             exit 1
@@ -134,11 +185,13 @@ for i in "$@"; do
     esac
 done
 
-####### Building zipped extension #######
+####### Building extension #######
 
 echo "*** Building mode: Building the extension ***"
+##### Building ALL platforms the extension #####
 if [ "$PLATFORM" = "" ]; then
-      platforms=("chrome" "edge" "firefox-mv2" "firefox-mv3")
+    platforms=("chrome" "edge" "firefox-mv2" "firefox-mv3")
+    ##### zipped version of ALL platform extension #####
     if [ "$PUBLISH" = true ]; then
         echo "*** Publishing mode: Packaging the extension ***"
         mkdir -p dist/build
@@ -154,17 +207,24 @@ if [ "$PLATFORM" = "" ]; then
         # Clean up temporary directory
         rm -rf "$TEMP_DIR"
         echo "*** Finished creating all zip files ***"
+        print_config
         exit 0
+        ##### unpacked version of ALL platform extension #####
     else
         for platform in "${platforms[@]}"; do
             DEST="dist/build/PUPSIS-Schedule-Exporter.$platform"
+            if [ "$TEST" ]; then
+                DEST="dist/build/TEST_PUPSIS-Schedule-Exporter.$platform"
+            fi
             building_platform "$platform" "$DEST"
             copy_common_files "$DEST"
             copy_platform_files "$platform" "$DEST"
         done
         echo "*** Finished building all extensions ***"
+        print_config
         exit 0
     fi
+    ##### Building a single specified platform extension #####
 else
     mkdir -p dist/build
     if [ "$PUBLISH" = true ]; then
@@ -174,6 +234,9 @@ else
     else
         echo "*** Unpacked mode: Building the $PLATFORM extension ***"
         DEST="dist/build/PUPSIS-Schedule-Exporter.$PLATFORM"
+        if [ "$TEST" ]; then
+            DEST="dist/build/TEST_PUPSIS-Schedule-Exporter.$PLATFORM"
+        fi
     fi
     building_platform "$PLATFORM" "$DEST"
     copy_common_files "$DEST"
@@ -184,7 +247,9 @@ else
         zip_files "$PLATFORM" "$DEST" "$(pwd)"
         rm -rf "$DEST"
         echo "*** Finished creating $PLATFORM zip file ***"
+        print_config
         exit 0
     fi
     echo "*** Finished building $PLATFORM extension ***"
+    print_config
 fi
