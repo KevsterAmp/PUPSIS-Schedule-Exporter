@@ -1,0 +1,13 @@
+
+- added debug features on build.sh
+- fixed the bugs on popup.js
+- added the id
+- added worflow
+- documentation
+- optimized the build script:
+- optimized the build script to include packed and unpacked extension
+- added multiplatform support
+- fix last part of privacy policy document
+- add privacy policy
+- add new version to manifest
+------------
