@@ -1,66 +1,95 @@
+# worflow derived from ublock origin
+# https://github.com/gorhill/uBlock/blob/master/.github/workflows/main.yml
+
 name: PUPSIS-Schedule-Exporter Release
 
 on:
   push:
     branches:
-      - main  # Triggers on push to the main branch
+       main
+       next
 
 permissions:
-  contents: write  # Necessary for creating releases and pushing contents
+  contents: read
 
 jobs:
   build:
-    name: Build and Release Extension
+    permissions:
+      contents: write
+
+    name: Build packages
     runs-on: ubuntu-latest
-
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
-      # Step 1: Checkout the repository code
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      # Step 2: Install dependencies and build the extension packages
+      # Checkout the repository
+      - name: Clone repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+       
+      # get the release version tag
+      - name: Get release information
+        id: release_info
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      
+      # build the release notes
+      - name: Assemble release notes
+        run: |
+          touch release.body.txt
+          grep -m1 -B10000 -- "----------" CHANGELOG.md >> release.body.txt
+          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
+
+      # create a GitHub release info
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+            tag_name: ${{ steps.release_info.outputs.VERSION }}
+            release_name: ${{ steps.release_info.outputs.VERSION }}
+            draft: true
+            prerelease: true
+            body_path: release.body.txt
+        
+      # install dependencies and build the packages
       - name: Install dependencies and build the packages
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential
           cd web-extension
-          make publish  # Running your make publish command which generates multiple files
+          make publish 
 
-      # Step 3: Create a GitHub release
-      - name: Create GitHub release
-        id: create_release
-        uses: actions/create-release@v1
+
+      # Step 4: Upload all extension files as assets to the release
+      - name: Upload Chrome package
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}  # Using the commit SHA as the tag name if no tags are created
-          release_name: "Release ${{ github.sha }}"
-          draft: false
-          prerelease: false
-          body_path: release.body.txt  # Optional file with release notes
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_name: PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_content_type: application/octet-stream
 
-      # Step 4: Upload all extension files as assets to the release
-      - name: Upload Chrome Extension
+      - name: Upload Firefox package
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/*-chrome-*.zip  # Adjust to your Chrome output file pattern
-          asset_name: chrome_extension.zip
-          asset_content_type: application/zip
+          asset_path: dist/build/PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.firefox-mv2.zip
+          asset_name: PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.firefox-mv2.zip
+          asset_content_type: application/octet-stream
 
-      - name: Upload Edge Extension
+      - name: Upload MS-EDGE package
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/*-edge-*.zip  # Adjust to your Edge output file pattern
-          asset_name: edge_extension.zip
-          asset_content_type: application/zip
-
-      - name: Upload Firefox MV2 Extension
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/*-firefox-mv2-*.xpi  # Adjust to your Firefox MV2 output file pattern
-          asset_name: firefox-mv2-extension.xpi
-          asset_content_type: application/zip
-
+          asset_path: dist/build/PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.edge.zip
+          asset_name: PUPSIS-Schedule-Exporter-${{ steps.release_info.outputs.VERSION }}.edge.zip
+          asset_content_type: application/octet-stream
