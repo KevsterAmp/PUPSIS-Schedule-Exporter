@@ -87,10 +87,10 @@ zip_files(){
     
     # Set the zip name based on the platform
     if [ "$platform" = "chrome" ] || [ "$platform" = "edge" ]; then
-        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.zip"
+        ZIP_NAME="PUPSIS-Schedule-Exporter-$version-$platform.zip"
         
         elif [[ "$platform" =~ "firefox" ]]; then
-        ZIP_NAME="PUPSIS-Schedule-Exporter-$platform-$version.xpi"
+        ZIP_NAME="PUPSIS-Schedule-Exporter-$version-$platform.xpi"
     else
         echo "[!] Invalid platform"
         return 1
