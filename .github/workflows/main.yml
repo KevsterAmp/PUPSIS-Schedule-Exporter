@@ -79,8 +79,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: web-extension/dist/build/PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.zip
-          asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.zip
+          asset_path: web-extension/dist/build/PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.xpi
+          asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.xpi
           asset_content_type: application/octet-stream
 
       # Upload MS-EDGE package
