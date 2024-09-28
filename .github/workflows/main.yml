@@ -1,12 +1,7 @@
 name: PUPSIS-Schedule-Exporter Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Set the version for the release"
-        required: true
-        default: "4.0.1.102"  # Default version can be changed
+  workflow_dispatch: # Trigger workflow manually via the GitHub UI
 
 permissions:
   contents: read
@@ -27,12 +22,14 @@ jobs:
         with:
           persist-credentials: false
        
-      # Get the manual version input
-      - name: Get version input
+      # ALWAYS CHECK THE VERSION ON dist/version FILE BEFORE RUNNING THIS WORKFLOW    
+      # Get the version from dist/version file
+      - name: Get version from dist/version
         id: release_info
         run: |
-          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
-      
+          VERSION=$(cat web-extension/dist/version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       # Build the release notes
       - name: Assemble release notes
         run: |
