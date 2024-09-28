@@ -9,12 +9,12 @@
 
 ### Firefox
 > **Important:**  
-Due to Mozilla's policy, we are unable to publish this extension on Mozilla Add-ons (AMO). As a workaround, Firefox users can install the extension as a **temporary add-on** to run it.
+Due to Mozilla's policy, we're unable to publish this extension on Mozilla Add-ons (AMO). As a workaround, Firefox users can install the extension as a **temporary add-on** to run it.
 
 [Download for Firefox](https://github.com/yam-1111/PUPSIS-Schedule-Exporte/releases/download/%version%/PUPSIS-Schedule-Exporter-%version%-firefox-mv2.xpi)
 
 ### Chrome
-To use this extension with Chrome, download the release version, **extract it first**, and add it as a **temporary add-on** via Chrome's extension settings.
+To use this extension Chrome build, download the release version, **extract it first**, and add it as a **temporary add-on** via Chrome's extension settings.
 
 [Download for Chrome](https://github.com/yam-1111/PUPSIS-Schedule-Exporte/releases/download/%version%/PUPSIS-Schedule-Exporter-%version%-chrome.zip)
 
