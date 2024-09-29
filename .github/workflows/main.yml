@@ -52,10 +52,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v${{ env.VERSION }}"  # Prefixed with "v" for versioning
+          tag_name: "${{ env.VERSION }}"  # Prefixed with "v" for versioning
           release_name: ${{ env.VERSION }}
           draft: false  # This makes it an official release
-          prerelease: true  # Ensure it is not a prerelease
+          prerelease: false  # Ensure it is not a prerelease
           body_path: release.body.txt
 
       # Install dependencies and build the packages
