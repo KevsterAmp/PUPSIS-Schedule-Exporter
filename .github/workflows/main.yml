@@ -74,8 +74,8 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: web-extension/dist/build/PUPSIS-Schedule-Exporter-${{ env.VERSION }}-chrome.zip
-          asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-chromium.zip
-          asset_content_type: application/octet-stream
+          asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-chrome.zip
+          asset_content_type: application/zip
 
       # Upload Firefox package
       - name: Upload Firefox package
@@ -86,7 +86,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: web-extension/dist/build/PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.xpi
           asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-firefox-mv2.xpi
-          asset_content_type: application/octet-stream
+          asset_content_type: application/zip
 
       # Upload MS-EDGE package
       - name: Upload MS-EDGE package
@@ -97,4 +97,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: web-extension/dist/build/PUPSIS-Schedule-Exporter-${{ env.VERSION }}-edge.zip
           asset_name: PUPSIS-Schedule-Exporter-${{ env.VERSION }}-edge.zip
-          asset_content_type: application/octet-stream
+          asset_content_type: application/zip
