@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-       
+
       # ALWAYS CHECK THE VERSION ON dist/version FILE BEFORE RUNNING THIS WORKFLOW    
       # Get the version from dist/version file
       - name: Get version from dist/version
@@ -29,6 +29,14 @@ jobs:
         run: |
           VERSION=$(cat web-extension/dist/version)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # Check if the version tag already exists
+      - name: Check if tag exists
+        run: |
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "Tag already exists. Aborting."
+            exit 1
+          fi
 
       # Build the release notes
       - name: Assemble release notes
@@ -44,12 +52,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.VERSION }}
+          tag_name: "v${{ env.VERSION }}"  # Prefixed with "v" for versioning
           release_name: ${{ env.VERSION }}
-          draft: true
-          prerelease: true
+          draft: true  # This makes it an official release
+          prerelease: true  # Ensure it is not a prerelease
           body_path: release.body.txt
-        
+
       # Install dependencies and build the packages
       - name: Install dependencies and build the packages
         run: |
