@@ -54,7 +54,7 @@ jobs:
         with:
           tag_name: "v${{ env.VERSION }}"  # Prefixed with "v" for versioning
           release_name: ${{ env.VERSION }}
-          draft: true  # This makes it an official release
+          draft: false  # This makes it an official release
           prerelease: true  # Ensure it is not a prerelease
           body_path: release.body.txt
 
