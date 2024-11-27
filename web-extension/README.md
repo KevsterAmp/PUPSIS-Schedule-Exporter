@@ -52,12 +52,16 @@ python build.py -p firefox-mv2 --unpacked
 ```
 - **All platforms** (chrome, edge firefox)
 ```bash
-python build.py --unpacked
+python build.py --unpacked 
+```
 
+#### Cleaning the directory (python)
+```bash
+python build.py --rm 
 ```
 
 ### Using makefile & build.sh
-- requires linux 
+- Prerequisities : Must run in Linux / Unix derivative environment
 
 #### Building for Specific Browsers (unpacked)
 Unpacked builds are used for local testing and development. You can generate browser-specific extensions as follows:
@@ -99,9 +103,14 @@ make firefox-publish
 ```
 make publish
 ```
+#### Cleaning the directory (makefile)
+```
+make clean
+```
+
 The output of the build will be placed in the `dist/build` directory.
 
-  
+
 ***
 ## File Directories
 

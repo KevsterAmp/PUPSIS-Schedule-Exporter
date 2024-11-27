@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+
+"""
+Build script for the web extension (PUPSIS-Schedule Exporter).
+
+based on makefile and functionalities of build.sh (linux)
+"""
+
 import os
 import shutil
 import zipfile
@@ -6,9 +13,13 @@ import argparse
 import tempfile
 import json
 
-
 def purge_build_directory():
-    """Remove all files in the 'dist/build' directory."""
+    """
+    Removes all files in the 'dist/build' directory.
+    
+    This function ensures a clean slate by deleting any files left from previous builds.
+    If the build directory doesn't exist, it will notify the user.
+    """
     build_dir = os.path.join(os.getcwd(), 'dist', 'build')
     if os.path.exists(build_dir):
         print("*** Purging build directory ***")
@@ -18,13 +29,31 @@ def purge_build_directory():
         print("*** Build directory does not exist; nothing to purge ***")
 
 def building_platform(platform, destination):
+    """
+    Sets up the build directory for the specified platform.
+    
+    This function removes any existing files in the destination directory and creates
+    the necessary structure for the build.
+    
+    Args:
+    - platform (str): The platform for which the build is being prepared (e.g., 'chrome', 'firefox').
+    - destination (str): The path where the platform-specific build files will be copied.
+    """
     print(f"*** Building {platform} dist files ***")
     if os.path.exists(destination):
         shutil.rmtree(destination)
     os.makedirs(destination, exist_ok=True)
 
-
 def copy_common_files(destination):
+    """
+    Copies common files shared across all platforms into the build destination.
+    
+    This includes assets like CSS, JS, and web icons, as well as essential HTML and JavaScript
+    files required for the extension to function correctly.
+    
+    Args:
+    - destination (str): The path to the build directory where common files will be copied.
+    """
     print("*** Copying common files (/css, /js, /web-icons) ***")
     shutil.copytree('src/css', os.path.join(destination, 'css'))
     shutil.copytree('src/utils', os.path.join(destination, 'utils'))
@@ -33,8 +62,20 @@ def copy_common_files(destination):
     shutil.copy('src/edit.html', destination)
     shutil.copy('src/editSched.js', destination)
 
-
 def copy_platform_files(platform, destination, test_mode=False):
+    """
+    Copies platform-specific files to the build destination and modifies the manifest file.
+    
+    Depending on the platform (e.g., 'chrome', 'firefox'), different files such as
+    `manifest.json`, `contentScript.js`, and `popup.js` are copied into the build directory.
+    Additionally, the version is updated in `manifest.json`, and the script supports modifications
+    for testing (e.g., overriding the manifest's match patterns for content scripts).
+    
+    Args:
+    - platform (str): The target platform (e.g., 'chrome', 'firefox').
+    - destination (str): The path where the platform-specific files will be copied.
+    - test_mode (bool): If True, the script will modify the manifest for testing purposes (e.g., overriding match patterns).
+    """
     print(f"*** Copying {platform}-specific files ***")
     version_file = "dist/version"
     manifest_path = os.path.join(destination, 'manifest.json')
@@ -93,9 +134,19 @@ def copy_platform_files(platform, destination, test_mode=False):
             popup_file.write(content)
             popup_file.truncate()
 
-
-
 def zip_files(platform, destination, dist_dir):
+    """
+    Creates a .zip or .xpi package for the specified platform's build files.
+    
+    This function packages the platform's build files into a zip archive, which can be 
+    used for distribution. The zip file name is based on the version of the extension
+    and the platform. The script supports Chrome, Firefox, and Edge platforms.
+    
+    Args:
+    - platform (str): The target platform for the build (e.g., 'chrome', 'firefox').
+    - destination (str): The directory containing the built files to be included in the zip.
+    - dist_dir (str): The root directory for the build process.
+    """
     print(f"*** Creating .zip for {platform} web browser ***")
     version_file = "dist/version"
     version = open(version_file).read().strip() if os.path.exists(version_file) else "unknown"
@@ -123,17 +174,32 @@ def zip_files(platform, destination, dist_dir):
 
     print(f"*** Finished Creating {zip_name} ***")
 
-
-
 def print_config(platform, publish, test_mode):
+    """
+    Prints the configuration of the current build process.
+    
+    This function outputs the details about the build configuration to the console, including
+    the platform(s) being targeted, whether the build is in publish mode, and if test/debug
+    mode is enabled.
+    
+    Args:
+    - platform (str): The platform(s) being targeted for the build.
+    - publish (bool): Indicates if the build is being published as a .zip or .xpi file.
+    - test_mode (bool): Indicates if the build is in test/debug mode.
+    """
     print("---- Building configuration: ----")
     print(f"  Platform: {platform or 'All'}")
     print(f"  Publish Mode (Zip): {publish}")
     print(f"  Debug Mode: {test_mode}")
     print("---------------------------------")
 
-
 def main():
+    """
+    The main function that parses command-line arguments and controls the build process.
+    
+    Based on the command-line options, this function will invoke the appropriate functions
+    to build, copy, modify, and package the extension files for the selected platform(s).
+    """
     parser = argparse.ArgumentParser(description="Build script for PUPSIS-Schedule Exporter")
     parser.add_argument('-p', '--platform', choices=['chrome', 'firefox-mv2', 'firefox-mv3', 'edge'], help="Target platform")
     parser.add_argument('-z', '--publish', action='store_true', help="Package as .zip or .xpi")
@@ -150,7 +216,6 @@ def main():
     # Platforms to build if none is specified
     platforms = [args.platform] if args.platform else ['chrome', 'edge', 'firefox-mv2', 'firefox-mv3']
 
-    
     publish = args.publish
     test_mode = args.test
     dist_dir = os.getcwd()
@@ -176,7 +241,6 @@ def main():
             copy_common_files(dest)
             copy_platform_files(platform, dest, test_mode)
             print(f"*** Finished building unpacked version for {platform} ***")
-
 
 if __name__ == "__main__":
     main()
