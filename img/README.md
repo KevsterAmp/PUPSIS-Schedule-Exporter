@@ -34,7 +34,7 @@
 #### You can now go to https://sis2.pup.edu.ph/student/schedule. <br>Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
 
 ## Firefox
-> **Important:**  
+> [!IMPORTANT]  
 Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/), this extension cannot be published on the Mozilla Web Store (AMO). However, Firefox users can still use the extension by installing it as a **temporary add-on**.
 
 

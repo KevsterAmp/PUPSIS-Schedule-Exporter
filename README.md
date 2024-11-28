@@ -23,6 +23,11 @@ A web extension that converts the schedule of students from PUPSIS to ICalendar 
 </p>
 
 
+> [!NOTE]  
+> **🦊 Mozilla Firefox:** This extension cannot be published on the Mozilla Web Store (AMO) due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/). However, Firefox users can still use the extension by installing it as a **temporary add-on**.  
+**[Follow this guide](./img/README.md)** for detailed steps on how to install the extension in Firefox.  
+
+
 ***
 
 
