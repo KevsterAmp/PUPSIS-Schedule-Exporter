@@ -7,10 +7,10 @@
 <img src="chrome/step_2.png">
 
 #### 3. Click the **three dots** on the upper right side of your browser <br> &nbsp;&nbsp;&nbsp; Click on **"Extensions"** <br> &nbsp;&nbsp;&nbsp; Click on **"Manage Extensions"**
-<img src="chromestep_3.png">
+<img src="chrome/step_3.png">
 
 #### 4. Click **"Developer Mode"** on the upper right
-<img src="chromestep_4.png">
+<img src="chrome/step_4.png">
 
 #### 5. Click **"Load Unpacked"** on the upper left
 <img src="chrome/step_5.png">
@@ -24,14 +24,7 @@
 #### Taa Daa! You can now use the extension on your browser!
 <img src="chrome/step_6.png">
 
-# Usage
-#### Click the **"Extension Icon"** to locate the extension. 
-<img src="chrome/usage1.png">
 
-#### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
-<img src="chrome/usage.png">
-
-#### You can now go to https://sis2.pup.edu.ph/student/schedule. <br>Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
 
 ## Firefox
 > [!IMPORTANT]  
@@ -41,18 +34,42 @@ Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/ad
 #### 1. Click the "**"Releases"**" button on this repository and then download the file with "**.xpi**"
 
 #### 2. Navigate in search bar and type "**about:config**"
+<img src="./firefox/config.png">
 
-#### 3. On search tab type `xpinstall.signatures.required` and toggle to false
+#### 3.  Click **Accept the Risk and Continue** to proceed in config page
+<img src="./firefox/acceptRisk.png" >
 
-#### 3. Navigate again in search bar and type `about:debugging` 
+#### On search tab type `xpinstall.signatures.required` and toggle to `false`
+<img src="./firefox/toggleXpi.png">
 
-#### 3. Click the "**This Firefox**"
+#### 4. Navigate again in search bar and type `about:debugging` 
+<img src="./firefox/aboutDebugging.png">
 
-#### 4. Click the "**Load Temporary Add-on...**"
+#### 5. Click the "**This Firefox**"
+<img src="./firefox/thisFirefox.png">
 
-#### 5. Then select the **".xpi"** you download earlier
+#### 6. Click the "**Load Temporary Add-on...**"
+<img src="./firefox/loadAddon.png">
 
-#### 6. Click the **"Extension Icon"** to locate the extension. 
+#### 5. Then select the **".xpi"** file you download earlier
+
+
+#### 6. Click the **"Extension Icon"** to locate the extension.
+<img src="./firefox/extensionIcon.png"> 
 
 #### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
+>[!NOTE]
+If the extension was missing after closing or restarting the browser, navigate again to `about:debugging` > Load Temporary Add-on and select again the .xpi you download
 
+<img src="./firefox/extension.png">
+
+
+***
+# Usage
+#### Click the **"Extension Icon"** to locate the extension. 
+<img src="chrome/usage1.png">
+
+#### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
+<img src="chrome/usage.png">
+
+#### You can now go to https://sis2.pup.edu.ph/student/schedule. <br>Click the extension and the **"Convert to .ics"** button to download the ICalendar file (.ics)
