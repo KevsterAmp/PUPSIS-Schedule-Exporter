@@ -1,5 +1,5 @@
 # Installation guide:
-## Chrome
+### Chrome / Microsoft Edge
 #### 1. Click the **"Code"** button on this repository and then **"Download ZIP"**
 <img src="chrome/step_1.png">
 
@@ -35,11 +35,16 @@
 
 ## Firefox
 > **Important:**  
-Due to Mozilla's policy, we're unable to publish this extension on Mozilla Add-ons (AMO). As a workaround, Firefox users can install the extension as a **temporary add-on** to run it.
+Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/), we're unable to publish this extension on Mozilla Add-ons (AMO). As a workaround, Firefox users can install the extension as a **temporary add-on** to run it.
+
 
 #### 1. Click the "**"Releases"**" button on this repository and then download the file with "**.xpi**"
 
-#### 2. Open firefox browser and navigate to search bar type "**about:debugging**"
+#### 2. Navigate in search bar and type "**about:config**"
+
+#### 3. On search tab type `xpinstall.signatures.required` and toggle to false
+
+#### 3. Navigate again in search bar and type `about:debugging` 
 
 #### 3. Click the "**This Firefox**"
 
@@ -50,5 +55,4 @@ Due to Mozilla's policy, we're unable to publish this extension on Mozilla Add-o
 #### 6. Click the **"Extension Icon"** to locate the extension. 
 
 #### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
-
 
