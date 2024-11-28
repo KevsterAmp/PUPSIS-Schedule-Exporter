@@ -35,7 +35,7 @@
 
 ## Firefox
 > **Important:**  
-Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/), we're unable to publish this extension on Mozilla Add-ons (AMO). As a workaround, Firefox users can install the extension as a **temporary add-on** to run it.
+Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/), this extension cannot be published on the Mozilla Web Store (AMO). However, Firefox users can still use the extension by installing it as a **temporary add-on**.
 
 
 #### 1. Click the "**"Releases"**" button on this repository and then download the file with "**.xpi**"
