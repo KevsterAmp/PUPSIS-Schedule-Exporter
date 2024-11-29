@@ -110,6 +110,33 @@ make clean
 
 The output of the build will be placed in the `dist/build` directory.
 
+### Testing the extension locally
+To test the extension on offline mode / local copy follow these steps:
+
+#### Platform Supported
+Browser Name       | Platform      | Manifest Version  
+--------------------|--------------|-------------------  
+Chrome               | chrome        | MV3  
+Microsoft Edge       | edge          | MV3  
+Firefox              | firefox-mv2   | MV2  
+Firefox (manifest v3)| firefox-mv3   | MV3  
+
+#### Steps
+1. **Get a Local Copy of the SIS Website**:
+   - Clone or download the [test branch](https://github.com/KevsterAmp/PUPSIS-Schedule-Exporter/tree/test/html) of this repository.
+   - Extract the files and serve them using VSCode's Live Server extension.
+
+2. **Build the Extension for Local Testing**:
+   - Add the `-t` flag when running `build.py` to enable the extension to work on the local version of `sis.pup.edu.ph`.
+   - Example build.py commands:
+     ```bash
+     python build.py -p <platform> -u -t # unpacked mode
+     # or
+     python build.py -p <platform> -z -t # zipped mode
+     ```
+     Replace `<platform>` with the desired target (e.g., `chrome`, `firefox-mv2`).
+
+Now, you can test the extension using the local copy of SIS, the output of the build will be placed in the `dist/build` directory.
 
 ***
 ## File Directories

@@ -31,7 +31,11 @@
 Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/add-on-policies/), this extension cannot be published on the Mozilla Web Store (AMO). However, Firefox users can still use the extension by installing it as a **temporary add-on**.
 
 
-#### 1. Click the "**"Releases"**" button on this repository and then download the file with "**.xpi**"
+#### 1.  Click the "**"Releases"**" button on this repository and then download the file with "**.xpi**"
+>[!TIP]
+**For building from source:** Follow the instructions in the [web-extension/README.md](../web-extension/README.md) file to build the project from source and obtain the .xpi file.
+
+<img src="./firefox/downloadFromRelease.png">
 
 #### 2. Navigate in search bar and type "**about:config**"
 <img src="./firefox/config.png">
@@ -51,15 +55,15 @@ Due to [Mozilla's policy](https://extensionworkshop.com/documentation/publish/ad
 #### 6. Click the "**Load Temporary Add-on...**"
 <img src="./firefox/loadAddon.png">
 
-#### 5. Then select the **".xpi"** file you download earlier
+#### 7. Then select the **".xpi"** file you download earlier
+<img src="./firefox/xpiDownload.png">
 
-
-#### 6. Click the **"Extension Icon"** to locate the extension.
+#### 8. Click the **"Extension Icon"** to locate the extension.
 <img src="./firefox/extensionIcon.png"> 
 
 #### This should pop up when you click the **"PUPSIS Scheduler Exporter"** extension.
 >[!NOTE]
-If the extension was missing after closing or restarting the browser, navigate again to `about:debugging` > Load Temporary Add-on and select again the .xpi you download
+If the extension was missing after closing or restarting the browser, navigate again to `about:debugging` > Load Temporary Add-on and select again the .xpi you downloaded.
 
 <img src="./firefox/extension.png">
 
