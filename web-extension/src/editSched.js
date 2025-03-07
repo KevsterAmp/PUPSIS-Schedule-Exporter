@@ -217,10 +217,12 @@ fileTypeSelect.addEventListener("change", (e) => {
             dateBoxes[i].disabled = true;
             inputBoxes[i].disabled = true;
             document.getElementById("dateInput").disabled = true;
+            document.getElementById("startDateInput").disabled = true;
         } else {
             dateBoxes[i].disabled = false;
             inputBoxes[i].disabled = false;
             document.getElementById("dateInput").disabled = false;
+            document.getElementById("startDateInput").disabled = false;
         }
     }
 

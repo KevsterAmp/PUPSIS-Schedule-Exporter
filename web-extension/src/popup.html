@@ -15,36 +15,59 @@
             <h2 class="pop-title">PUPSIS-Schedule-Exporter</h2>
             <hr class="separator">
             <div class="date-input-container">
-                <label for="dateInput">
-                    <p class="label-text">Select end date of recurring schedule:</p>
-                </label>
-                <input type="date" id="dateInput" name="dateInput">
+                <p class="section-label">Select recurring date</p>
+                <div class="date-options">
+                    <div class="date-row">
+                        <div class="date-option">
+                            <label for="startDateInput">
+                                <p class="label-text">Start date:</p>
+                            </label>
+                            <input type="date" id="startDateInput" name="startDateInput">
+                        </div>
+                        <div class="date-option">
+                            <label for="dateInput">
+                                <p class="label-text">End date:</p>
+                            </label>
+                            <input type="date" id="dateInput" name="dateInput">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="convert-container">
-                <button id="convertButton"><span class="btn-txt">Convert to</span></button>
-                <select name="file-type" id="fileType">
-                    <option value="ics" selected>.ics</option>
-                    <option value="csv">.csv</option>
-                    <option value="json">.json</option>
-                </select>
+            <div class="buttons-row">
+                <div class="convert-container">
+                    <button id="convertButton"><span class="btn-txt">Convert to</span></button>
+                    <select name="file-type" id="fileType">
+                        <option value="ics" selected>.ics</option>
+                        <option value="csv">.csv</option>
+                        <option value="json">.json</option>
+                    </select>
+                </div>
             </div>
-
         </div>
-        <button id="editButton">
-            <span class="btn-txt">Edit my schedule</span>
-        </button>
+        
+        <div class="edit-container">
+            <button id="editButton">
+                <span class="btn-txt">Edit my schedule</span>
+            </button>
+        </div>
 
-
+        <div class="ical-options-container">
+            <div class="ical-options">
+                <label for="includeSubjectCode" class="label-text">
+                    <input type="checkbox" id="includeSubjectCode" name="includeSubjectCode" checked>
+                    Include subject code in iCal summary
+                </label>
+            </div>
+        </div>
 
         <div id="display-box">
-
         </div>
+        
         <div class="tail">
             <a href="https://www.flaticon.com/free-icons/plugins" title="plugins icons" id="plugin">Plugins icon created
                 by juicy_fish - Flaticon</a>
         </div>
     </div>
-
 
     <script type="module" src="popup.js"></script>
 </body>

@@ -5,14 +5,14 @@
 }
 
 .popup-container {
-    width: 260px;
-    height: 200px;
+    width: 250px;
+    height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding: 10px 15px 10px 15px;
-    padding-bottom: 5px;
+    padding: 10px 15px;
+    padding-bottom: 0; /* Removed bottom padding to help reduce gap */
 }
 
 .html-container {
@@ -25,7 +25,7 @@
 .pop-title{
     color: white;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .separator {
@@ -35,26 +35,82 @@
     background-color: rgba(255, 255, 255, 0.25);
 }
 
+.section-label {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 5px;
+    width: 100%;
+    font-weight: normal;
+}
+
 .date-input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
+    width: 100%;
 }
 
-#dateInput {
+.date-options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.date-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 48%;
+}
+
+.buttons-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0; /* Ensure no bottom margin */
+}
+
+.ical-options-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.ical-options {
+    text-align: center;
+    margin: 5px 0;
+}
+
+.ical-options input[type="checkbox"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+#dateInput, #startDateInput {
     padding: 0.25rem;
     border-radius: 4px;
     outline: none;
     border: none;
     background-color: #FCFCFD;
     color: #36395A;
-    width: 50%;
+    width: 100%;
+    box-sizing: border-box;
     filter: drop-shadow(0 2px 4px rgba(45, 35, 66, 0.4));
 }
 
-#dateInput:disabled {
+#dateInput:disabled, #startDateInput:disabled {
     background-color: #e4e2e2;
     color: rgba(0, 0, 0, 0.3);
     cursor: not-allowed;
@@ -62,7 +118,7 @@
 
 .convert-container {
     position: relative;
-    width: 75%;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -71,11 +127,17 @@
     border-radius: 4px;
 }
 
+.edit-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2px; /* Reduced from 5px to 2px to minimize gap */
+}
+
 #convertButton {
     flex: 75;
     align-items: center;
     appearance: none;
-    /* background-color: #FCFCFD; */
     border-radius: 4px;
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
@@ -84,7 +146,7 @@
     cursor: pointer;
     display: inline-flex;
     font-family: "JetBrains Mono",monospace;
-    height: 35px;
+    height: 38px;
     justify-content: center;
     line-height: 1;
     list-style: none;
@@ -117,7 +179,7 @@
 }
 
 #fileType {
-    height: 30px;
+    height: 38px;
     flex: 25;
     outline: 0px;
     border: 0px;
@@ -129,14 +191,14 @@
 }
 
 .btn-txt{
-    font-size: px;
+    font-size: 15px;
 }
 
 #display-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    margin-top: 5px;
 }
 
 .display-text{
@@ -145,17 +207,17 @@
 }
 
 .label-text{
-    color:white;
+    color: white;
     text-align: center;
-
+    font-size: 13px;
 }
 
 .display-text-error {
     color: #f72a3f;
-    animation: shake 0.3s ;
-  }
+    animation: shake 0.3s;
+}
   
-  @keyframes shake {
+@keyframes shake {
     0%, 100% {
       transform: translateX(0);
     }
@@ -165,27 +227,26 @@
     20%, 40%, 60%, 80% {
       transform: translateX(15px);
     }
-  }
+}
 
 #plugin {
-  color: white;
-  font-size: 10px;
-  text-decoration: none;
+    color: white;
+    font-size: 9px;
+    text-decoration: none;
 }
 
 .tail {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5px 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 5px;
 }
 
-/*Edit button*/
+/* Edit button */
 #editButton {
-    flex: 75;
     align-items: center;
     appearance: none;
-    /* background-color: #FCFCFD; */
     border-radius: 4px;
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
@@ -194,7 +255,7 @@
     cursor: pointer;
     display: flex;
     font-family: "JetBrains Mono",monospace;
-    height: 35px;
+    height: 38px;
     justify-content: center;
     line-height: 1;
     list-style: none;
@@ -210,7 +271,8 @@
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    top : -10px;
+    width: 250px;
+    background-color: #FCFCFD;
 }
 
 #editButton:hover {

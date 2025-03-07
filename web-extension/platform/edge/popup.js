@@ -6,32 +6,32 @@ import * as exports from './utils/exports.js';
 const OVERRIDE_DEV = false;
 
 
-function handleClickEvent(){
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      const currentTab = tabs[0];
-      
-      //set to false when pushing to main, true when testing
-        if (OVERRIDE_DEV) {
-          chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
-        }
-      // checks if SIS portal is open and extracts
-        else if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
-          chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
-        } 
-      // opens new tab with SIS page
-        else {
-          chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function(newTab) {
-          chrome.tabs.update(newTab.id, { active: true });
-          });
-        }
-    });
+function handleClickEvent() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const currentTab = tabs[0];
+
+    //set to false when pushing to main, true when testing
+    if (OVERRIDE_DEV) {
+      chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
+    }
+    // checks if SIS portal is open and extracts
+    else if ((/sis.*\/student\/schedule$/).test(currentTab.url)) {
+      chrome.tabs.sendMessage(currentTab.id, { type: 'getschedule' });
+    }
+    // opens new tab with SIS page
+    else {
+      chrome.tabs.create({ url: 'https://sis2.pup.edu.ph/student/schedule' }, function (newTab) {
+        chrome.tabs.update(newTab.id, { active: true });
+      });
+    }
+  });
 }
 
 /*********************************/
-document.querySelector('#convertButton').addEventListener('click', function(){
+document.querySelector('#convertButton').addEventListener('click', function () {
   handleClickEvent();
 
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type === "receiveschedule") {
       if (request.schedule.length < 1) {
         helpers.displayMessage("Empty schedule found", "display-text-error");
@@ -45,10 +45,10 @@ document.querySelector('#convertButton').addEventListener('click', function(){
         if (preferredFileType === 'csv') {
           data = exports.jsonToCSV(output);
           textContent = "CSV";
-        } 
+        }
         else if (preferredFileType === 'ics') {
           data = exports.jsonToICal(output);
-          
+
           console.log('---------------');
           console.log(data)
           textContent = "ICalendar";
@@ -63,7 +63,7 @@ document.querySelector('#convertButton').addEventListener('click', function(){
         // change the text content depending on the preferred file type
         helpers.displayMessage(newTag_textContent);
       }
-      
+
     }
   });
 
@@ -75,34 +75,37 @@ let preferredFileType = fileTypeSelect.value;
 
 // change the value of fileTypeSelect whenever the value of the selection is changed
 fileTypeSelect.addEventListener("change", (e) => {
-    preferredFileType = e.target.value;
-    if (preferredFileType === 'csv' || preferredFileType == 'json') {
-        document.getElementById("dateInput").disabled = true;
-    } else {
-        document.getElementById("dateInput").disabled = false;
-    }
-    
+  preferredFileType = e.target.value;
+  if (preferredFileType === 'csv' || preferredFileType == 'json') {
+    document.getElementById("dateInput").disabled = true;
+    document.getElementById("startDateInput").disabled = true;
+  } else {
+    document.getElementById("dateInput").disabled = false;
+    document.getElementById("startDateInput").disabled = false;
+  }
+
 });
 
 // set the default end date (4 months from now) of the date input 
 helpers.setDefaultEndDate(4);
+helpers.setDefaultStartDate();
 
 /***********************
  * editButton
  */
-document.querySelector('#editButton').addEventListener('click', function(event) {
+document.querySelector('#editButton').addEventListener('click', function (event) {
   // Prevent the default form submission behavior
   event.preventDefault();
 
   handleClickEvent();
 
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == "receiveschedule") {
       if (request.schedule.length < 1) {
         helpers.displayMessage("Empty schedule found", "display-text-error");
       } else {
         // process the raw infos
-        let userSched =  helpers.assignColorsToSubjects(helpers.separateSchedules(request.schedule));
+        let userSched = helpers.assignColorsToSubjects(helpers.separateSchedules(request.schedule));
         console.log(userSched);
 
         // Store the data in localStorage
