@@ -1,1 +1,4 @@
 *.zip
+*.xpi
+/dist/build/*
+venv/

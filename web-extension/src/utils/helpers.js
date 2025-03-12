@@ -15,6 +15,16 @@ export function setDefaultEndDate(endDateInMonths) {
   console.log("set default");
 }
 
+/**
+ * sets the default date to the current date
+ * @returns {void} sets the default date to the current date
+*/
+export function setDefaultStartDate() {
+  const startDate = new Date();
+  const startDateElement = document.getElementById("startDateInput");
+  startDateElement.value = startDate.toISOString().slice(0, 10);
+}
+
 
 export function getDayDate(dayOfWeek) {
   const today = new Date();

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "PUPSIS Schedule Exporter",
+  "version": "4.0.1",
+  "description": "A web extension for converting PUPSIS schedule to ICalendar format (.ics), CSV, and JSON file",
+  "author": "Kevin Christian Amparado & contributors",
+  "icons": {
+    "128": "web-icons/web-icon.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sis2.pup.edu.ph/student/schedule",
+        "https://sis1.pup.edu.ph/student/schedule",
+        "https://sis7.pup.edu.ph/student/schedule",
+        "https://sis8.pup.edu.ph/student/schedule"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_title": "PUPSIS Schedule Exporter",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "web-icons/web-icon.png"
+    }
+  },
+  "web_accessible_resources": [
+    "web-icons/*",
+    "css/*",
+    "utils/*",
+    "popup.html",
+    "contentScript.js",
+    "editSched.js"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{96d168d0-4f26-4782-a116-23d916b7a0aa}"
+    }
+  }
+}

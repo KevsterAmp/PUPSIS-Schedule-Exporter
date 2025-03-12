@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="edit.css">
+    <link rel="stylesheet" href="./css/edit.css">
     <title>Edit schedule</title>
 </head>
 <body>
@@ -26,15 +26,30 @@
         <p id="bottom-text"></p>
         <div class="bottom-buttons">
             <div class="date-input-container">
-                <input type="date" id="dateInput" name="dateInput">
+                <div class="date-options">
+                    <div class="date-option">
+                        <label for="startDateInput">Start Date:</label>
+                        <input type="date" id="startDateInput" name="startDateInput">
+                    </div>
+                    <div class="date-option">
+                        <label for="dateInput">End Date:</label>
+                        <input type="date" id="dateInput" name="dateInput">
+                    </div>
+                </div>
+                <div class="ical-options">
+                    <label for="includeSubjectCode">
+                        <input type="checkbox" id="includeSubjectCode" name="includeSubjectCode" checked>
+                        Include subject code in iCal summary
+                    </label>
+                </div>
             </div>
 
             <div class="convert-container">
                 <button id="convertButton"><span class="btn-txt">Convert to</span></button>
                 <select name="file-type" id="fileType">
-                    <option class="btn-txt"value="ics" selected>.ics</option>
-                    <option class="btn-txt"value="csv">.csv</option>
-                    <option class="btn-txt"value="json">.json</option>
+                    <option class="btn-txt" value="ics" selected>.ics</option>
+                    <option class="btn-txt" value="csv">.csv</option>
+                    <option class="btn-txt" value="json">.json</option>
                 </select>
             </div>
         </div>

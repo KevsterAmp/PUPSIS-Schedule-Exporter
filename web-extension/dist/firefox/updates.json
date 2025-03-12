@@ -1,0 +1,13 @@
+{
+    "addons": {
+     "96d168d0-4f26-4782-a016-23d916b7a0aa": {
+      "updates": [
+       {
+        "version": "4.0.2",
+        "browser_specific_settings": { "gecko": { "strict_min_version": "78.0" } },
+        "update_link": "https://github.com/gorhill/uBlock/releases/download/4.0.2/PUPSIS-Schedule-Exporter-4.0.2.firefox-mv2.signed.xpi"
+       }
+      ]
+     }
+    }
+   }
